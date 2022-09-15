@@ -1,11 +1,18 @@
 {
   "name": "angular-advanced",
-  "version": "0.0.0",
+  "version": "14.0.0",
+  "description": "Advanced Angular course",
+  "author": {
+    "name": "Alberto Basalo",
+    "email": "albertobasalo@hotmail.com",
+    "url": "https://albertobasalo.dev"
+  },
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve -o --port=4214",
     "build": "ng build",
-    "watch": "ng build --watch --configuration development"
+    "watch": "ng build --watch --configuration development",
+    "api": "json-server-auth ./database/db.json -r ./database/routes.json"
   },
   "private": true,
   "dependencies": {
@@ -17,6 +24,7 @@
     "@angular/platform-browser": "^14.2.0",
     "@angular/platform-browser-dynamic": "^14.2.0",
     "@angular/router": "^14.2.0",
+    "@picocss/pico": "^1.5.5",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
@@ -25,6 +33,8 @@
     "@angular-devkit/build-angular": "^14.2.2",
     "@angular/cli": "~14.2.2",
     "@angular/compiler-cli": "^14.2.0",
+    "json-server": "^0.17.0",
+    "json-server-auth": "^2.1.0",
     "typescript": "~4.7.2"
   }
 }

@@ -9,7 +9,10 @@
         "@schematics/angular:component": {
           "inlineTemplate": true,
           "inlineStyle": true,
-          "skipTests": true
+          "flat": true,
+          "skipTests": true,
+          "skipSelector": false,
+          "type": "Page"
         },
         "@schematics/angular:class": {
           "skipTests": true
@@ -45,11 +48,9 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
+              "./node_modules/@picocss/pico/css/pico.fluid.classless.min.css",
               "src/styles.css"
             ],
             "scripts": []
