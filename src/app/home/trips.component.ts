@@ -22,7 +22,7 @@ import { data } from "../data.repository";
   template: `
     <article>
       <h3>Offering {{ getTripsCounter() }} trips</h3>
-      <ul>
+      <ul *ngIf="trips.length > 0; else noContent">
         <li *ngFor="let trip of trips">
           <span [ngClass]="getClassForStatus(trip.status)">
             {{ trip.destination }}
@@ -37,6 +37,7 @@ import { data } from "../data.repository";
           <span *ngIf="trip.kind === 'TripOnly'">🛰️</span>
         </li>
       </ul>
+      <ng-template #noContent>🕳️ No data yet</ng-template>
     </article>
   `,
 })

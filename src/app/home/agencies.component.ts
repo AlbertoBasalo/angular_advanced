@@ -15,22 +15,23 @@ import { data } from "../data.repository";
     `,
   ],
   template: `
-    <article>
-      <h3>We work with {{ agencies.length }} agencies</h3>
-      <ul>
-        <li *ngFor="let agency of agencies">
-          <span [ngClass]="getClassForStatus(agency.status)">
-            {{ agency.name }}
-          </span>
-          <span *ngIf="agency.range === 'Interplanetary'">🪐</span>
-          <span *ngIf="agency.range === 'Orbital'">🌍</span>
-        </li>
-      </ul>
-    </article>
+    <app-list
+      [header]="header"
+      [data]="agencies"
+      [dataTemplate]="agencyLi"
+    ></app-list>
+    <ng-template #agencyLi let-context>
+      <span [ngClass]="getClassForStatus(context.status)">
+        {{ context.name }}
+      </span>
+      <span *ngIf="context.range === 'Interplanetary'">🪐</span>
+      <span *ngIf="context.range === 'Orbital'">🌍</span>
+    </ng-template>
   `,
 })
 export class AgenciesComponent {
   agencies = data.agencies;
+  header = `We work with ${this.agencies.length} agencies`;
   getAgenciesCounter = () => this.agencies.length;
   getClassForStatus = (status: string) => status.toLowerCase();
 }
