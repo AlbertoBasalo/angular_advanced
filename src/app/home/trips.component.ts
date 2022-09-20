@@ -3,6 +3,22 @@ import { data } from "../data.repository";
 
 @Component({
   selector: "app-trips",
+  styles: [
+    `
+      .green {
+        color: green;
+      }
+      .orange {
+        color: orange;
+      }
+      .sold-out {
+        color: red;
+      }
+      .few-places {
+        color: orange;
+      }
+    `,
+  ],
   template: `
     <article>
       <h3>Offering {{ getTripsCounter() }} trips</h3>
@@ -26,30 +42,14 @@ import { data } from "../data.repository";
       </ul>
     </article>
   `,
-  styles: [
-    `
-      .green {
-        color: green;
-      }
-      .orange {
-        color: orange;
-      }
-      .sold-out {
-        color: red;
-      }
-      .few-places {
-        color: orange;
-      }
-    `,
-  ],
 })
 export class TripsComponent {
   trips = data.trips;
 
   getTripsCounter = () => this.trips.length;
-  getClassForStatus(status: string): string {
-    return status === "Confirmed" ? "green" : "orange";
-  }
+  getClassForStatus = (status: string) =>
+    status === "Confirmed" ? "green" : "orange";
+
   getClassForPlaces(places: number): string {
     if (places === 0) return "sold-out";
     if (places < 8) return "few-places";
