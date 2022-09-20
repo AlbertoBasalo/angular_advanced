@@ -33,11 +33,8 @@ import { data } from "../data.repository";
           <span [ngClass]="getClassForPlaces(trip.places)">
             🧑🏼‍🚀 {{ trip.places }}
           </span>
-          <ng-container
-            *ngIf="trip.kind === 'WithStay'; then withStay; else tripOnly"
-          ></ng-container>
-          <ng-template #withStay>🧳</ng-template>
-          <ng-template #tripOnly>🛰️</ng-template>
+          <span *ngIf="trip.kind === 'WithStay'">🧳</span>
+          <span *ngIf="trip.kind === 'TripOnly'">🛰️</span>
         </li>
       </ul>
     </article>
