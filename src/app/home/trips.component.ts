@@ -49,7 +49,6 @@ export class TripsComponent {
   getTripsCounter = () => this.trips.length;
   getClassForStatus = (status: string) =>
     status === "Confirmed" ? "green" : "orange";
-
   getClassForPlaces(places: number): string {
     if (places === 0) return "sold-out";
     if (places < 8) return "few-places";
