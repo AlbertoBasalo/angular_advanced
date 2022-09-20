@@ -21,17 +21,22 @@ import { data } from "../data.repository";
       [dataTemplate]="agencyLi"
     ></app-list>
     <ng-template #agencyLi let-context>
-      <span [ngClass]="getClassForStatus(context.status)">
+      <span [ngClass]="context.status | lowercase">
         {{ context.name }}
       </span>
-      <span *ngIf="context.range === 'Interplanetary'">🪐</span>
-      <span *ngIf="context.range === 'Orbital'">🌍</span>
+      <ng-container
+        *ngIf="
+          context.range === 'Interplanetary';
+          then interplanetary;
+          else orbital
+        "
+      ></ng-container>
     </ng-template>
+    <ng-template #interplanetary>🪐</ng-template>
+    <ng-template #orbital>🌍</ng-template>
   `,
 })
 export class AgenciesComponent {
   agencies = data.agencies;
   header = `We work with ${this.agencies.length} agencies`;
-  getAgenciesCounter = () => this.agencies.length;
-  getClassForStatus = (status: string) => status.toLowerCase();
 }
