@@ -1,5 +1,4 @@
-import { Component } from "@angular/core";
-import { data } from "../data.repository";
+import { Component, Input } from "@angular/core";
 
 @Component({
   selector: "app-trips",
@@ -38,7 +37,7 @@ import { data } from "../data.repository";
   `,
 })
 export class TripsComponent {
-  trips = data.trips;
+  @Input() trips: any[] = [];
   getHeader = () => `Offering ${this.trips.length} trips`;
   byStatus = (status: string) => (status === "Confirmed" ? "green" : "orange");
   byPlaces = (places: number) => {

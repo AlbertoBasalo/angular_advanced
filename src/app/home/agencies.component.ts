@@ -1,5 +1,5 @@
-import { Component } from "@angular/core";
-import { data } from "../data.repository";
+import { Component, Input } from "@angular/core";
+import { Agency } from "../models/agency.interface";
 
 @Component({
   selector: "app-agencies",
@@ -35,7 +35,7 @@ import { data } from "../data.repository";
   `,
 })
 export class AgenciesComponent {
-  agencies = data.agencies;
+  @Input() agencies: Agency[] = [];
   byStatus = (status: string) => status.toLowerCase();
   getHeader = () => `We work with ${this.agencies.length} agencies`;
 }
