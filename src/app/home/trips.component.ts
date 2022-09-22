@@ -21,18 +21,14 @@ import { data } from "../data.repository";
   ],
   template: `
     <article>
-      <h3>Offering {{ trips.length }} trips</h3>
+      <h3>{{ getHeader() }}</h3>
       <ul *ngIf="trips.length > 0">
         <li *ngFor="let trip of trips">
-          <span [ngClass]="trip.status === 'Confirmed' ? 'green' : 'orange'">
-            {{ trip.destination }}
-          </span>
+          <span [ngClass]="byStatus(trip.status)">{{ trip.destination }}</span>
           <span>💸 {{ trip.flightPrice | currency }}</span>
           <span>⤴️ {{ trip.startDate | date: "yyyy-MMM-dd" }}</span>
           <span>⤵️ {{ trip.endDate | date: "yyyy-MMM-dd" }}</span>
-          <span [ngClass]="getClassForPlaces(trip.places)">
-            🧑🏼‍🚀 {{ trip.places }}
-          </span>
+          <span [ngClass]="byPlaces(trip.places)">🧑🏼‍🚀 {{ trip.places }}</span>
           <span *ngIf="trip.kind === 'WithStay'">🧳</span>
           <span *ngIf="trip.kind === 'TripOnly'">🛰️</span>
         </li>
@@ -43,9 +39,11 @@ import { data } from "../data.repository";
 })
 export class TripsComponent {
   trips = data.trips;
-  getClassForPlaces(places: number): string {
+  getHeader = () => `Offering ${this.trips.length} trips`;
+  byStatus = (status: string) => (status === "Confirmed" ? "green" : "orange");
+  byPlaces = (places: number) => {
     if (places === 0) return "sold-out";
     if (places < 8) return "few-places";
     return "";
-  }
+  };
 }

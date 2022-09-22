@@ -16,12 +16,12 @@ import { data } from "../data.repository";
   ],
   template: `
     <app-list
-      [header]="header"
+      [header]="getHeader()"
       [data]="agencies"
-      [dataTemplate]="agencyLi"
+      [dataTemplate]="agencyListItem"
     ></app-list>
-    <ng-template #agencyLi let-context>
-      <span [ngClass]="context.status | lowercase">
+    <ng-template #agencyListItem let-context>
+      <span [ngClass]="byStatus(context.status)">
         {{ context.name }}
       </span>
       <ng-container
@@ -38,5 +38,6 @@ import { data } from "../data.repository";
 })
 export class AgenciesComponent {
   agencies = data.agencies;
-  header = `We work with ${this.agencies.length} agencies`;
+  byStatus = (status: string) => status.toLowerCase();
+  getHeader = () => `We work with ${this.agencies.length} agencies`;
 }
