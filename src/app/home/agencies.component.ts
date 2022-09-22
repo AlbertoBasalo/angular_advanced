@@ -21,9 +21,7 @@ import { data } from "../data.repository";
       [dataTemplate]="agencyListItem"
     ></app-list>
     <ng-template #agencyListItem let-context>
-      <span [ngClass]="byStatus(context.status)">
-        {{ context.name }}
-      </span>
+      <span [ngClass]="byStatus(context.status)">{{ context.name }}</span>
       <ng-container
         *ngIf="
           context.range === 'Interplanetary';
