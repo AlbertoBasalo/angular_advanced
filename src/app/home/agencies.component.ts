@@ -15,16 +15,23 @@ import { data } from "../data.repository";
     `,
   ],
   template: `
-    <article>
-      <h3>{{ getHeader() }}</h3>
-      <ul>
-        <li *ngFor="let agency of agencies">
-          <span [ngClass]="byStatus(agency.status)">{{ agency.name }}</span>
-          <span *ngIf="agency.range === 'Interplanetary'">🪐</span>
-          <span *ngIf="agency.range === 'Orbital'">🌍</span>
-        </li>
-      </ul>
-    </article>
+    <app-list
+      [header]="getHeader()"
+      [data]="agencies"
+      [dataTemplate]="agencyListItem"
+    ></app-list>
+    <ng-template #agencyListItem let-context>
+      <span [ngClass]="byStatus(context.status)">{{ context.name }}</span>
+      <ng-container
+        *ngIf="
+          context.range === 'Interplanetary';
+          then interplanetary;
+          else orbital
+        "
+      ></ng-container>
+    </ng-template>
+    <ng-template #interplanetary>🪐</ng-template>
+    <ng-template #orbital>🌍</ng-template>
   `,
 })
 export class AgenciesComponent {

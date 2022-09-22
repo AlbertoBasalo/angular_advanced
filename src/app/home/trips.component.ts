@@ -41,9 +41,9 @@ export class TripsComponent {
   trips = data.trips;
   getHeader = () => `Offering ${this.trips.length} trips`;
   byStatus = (status: string) => (status === "Confirmed" ? "green" : "orange");
-  byPlaces(places: number): string {
+  byPlaces = (places: number) => {
     if (places === 0) return "sold-out";
     if (places < 8) return "few-places";
     return "";
-  }
+  };
 }
