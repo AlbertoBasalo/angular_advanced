@@ -1,14 +1,18 @@
-import { Component } from "@angular/core";
+import { Component, EventEmitter, Output } from "@angular/core";
 
 @Component({
   selector: "app-reloading",
   template: `
-    <button (click)="reload()">♻️ Reload</button>
+    <button (click)="onClick()">♻️ Reload</button>
     <aside *ngIf="isReloading">Reloading... please wait. ⌛</aside>
   `,
   styles: [],
 })
 export class ReloadingComponent {
+  @Output() reload = new EventEmitter<void>();
   isReloading = false;
-  reload = () => (this.isReloading = true);
+  onClick = () => {
+    this.isReloading = true;
+    this.reload.next();
+  };
 }

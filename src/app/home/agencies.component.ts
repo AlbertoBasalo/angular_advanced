@@ -1,8 +1,14 @@
-import { Component } from "@angular/core";
-import { data } from "../data.repository";
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnChanges,
+  SimpleChanges,
+} from "@angular/core";
 
 @Component({
   selector: "app-agencies",
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styles: [
     `
       .active {
@@ -15,13 +21,25 @@ import { data } from "../data.repository";
     `,
   ],
   template: `
+    <button (click)="onClick()">click me</button>
     <app-list
-      [header]="getHeader()"
+      [header]="header"
+      [data]="agencies"
+      [dataTemplate]="agencyListItem"
+    ></app-list>
+    <app-list
+      [header]="agencies | agenciesHeader"
+      [data]="agencies"
+      [dataTemplate]="agencyListItem"
+    ></app-list>
+    <app-list
+      [header]="agenciesHeader"
       [data]="agencies"
       [dataTemplate]="agencyListItem"
     ></app-list>
     <ng-template #agencyListItem let-context>
       <span [ngClass]="byStatus(context.status)">{{ context.name }}</span>
+      <span [ngClass]="context.status | agencyStatus">{{ context.name }}</span>
       <ng-container
         *ngIf="
           context.range === 'Interplanetary';
@@ -34,8 +52,25 @@ import { data } from "../data.repository";
     <ng-template #orbital>🌍</ng-template>
   `,
 })
-export class AgenciesComponent {
-  agencies = data.agencies;
-  byStatus = (status: string) => status.toLowerCase();
-  getHeader = () => `We work with ${this.agencies.length} agencies`;
+export class AgenciesComponent implements OnChanges {
+  @Input() agencies: any[] = [];
+  byStatus(status: string) {
+    console.log("👩🏼‍🏭 function status", status);
+    return status.toLowerCase();
+  }
+  get header() {
+    const header = `We work with ${this.agencies.length} agencies`;
+    // console.log("🏚️ property header", header);
+    return header;
+  }
+  agenciesHeader = "";
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes["agencies"]) {
+      this.agenciesHeader = `We work with ${changes["agencies"].currentValue.length} agencies`;
+      console.log("⚡change", this.agenciesHeader);
+    }
+  }
+  onClick() {
+    console.log("click");
+  }
 }

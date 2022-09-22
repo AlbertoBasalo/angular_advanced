@@ -6,7 +6,7 @@ import { Component, Input, TemplateRef } from "@angular/core";
     <article>
       <h3>{{ header }}</h3>
       <ul *ngIf="data.length > 0; else noContent">
-        <li *ngFor="let item of data">
+        <li *ngFor="let item of data; trackBy: trackByFn">
           <ng-container
             [ngTemplateOutlet]="dataTemplate"
             [ngTemplateOutletContext]="{ $implicit: item }"
@@ -23,4 +23,8 @@ export class ListComponent {
   @Input() header = "";
   @Input() data: unknown[] = [];
   @Input() public dataTemplate!: TemplateRef<HTMLElement>;
+
+  trackByFn(index: number, item: any) {
+    return item["id"];
+  }
 }

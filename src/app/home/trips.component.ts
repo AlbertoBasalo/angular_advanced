@@ -1,8 +1,9 @@
-import { Component } from "@angular/core";
+import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { data } from "../data.repository";
 
 @Component({
   selector: "app-trips",
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styles: [
     `
       .green {
@@ -20,8 +21,11 @@ import { data } from "../data.repository";
     `,
   ],
   template: `
+    <app-reloading (reload)="onReload()"></app-reloading>
     <article>
-      <h3>{{ getHeader() }}</h3>
+      <h3>{{ header }}</h3>
+      <h4>{{ getHeader() }}</h4>
+      <h4>{{ header | uppercase }}</h4>
       <ul *ngIf="trips.length > 0">
         <li *ngFor="let trip of trips">
           <span [ngClass]="byStatus(trip.status)">{{ trip.destination }}</span>
@@ -39,11 +43,24 @@ import { data } from "../data.repository";
 })
 export class TripsComponent {
   trips = data.trips;
-  getHeader = () => `Offering ${this.trips.length} trips`;
+  get header() {
+    const header = `Offering ${this.trips.length} trips`;
+    console.log("property", header);
+    return header;
+  }
+  getHeader() {
+    const header = `Offering ${this.trips.length} trips`;
+    console.log("method", header);
+    return header;
+  }
   byStatus = (status: string) => (status === "Confirmed" ? "green" : "orange");
   byPlaces = (places: number) => {
+    // console.log("places", places);
     if (places === 0) return "sold-out";
     if (places < 8) return "few-places";
     return "";
   };
+  onReload() {
+    this.trips = data.trips;
+  }
 }
