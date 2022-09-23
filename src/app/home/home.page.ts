@@ -17,7 +17,7 @@ import { ApiService } from "../services/api.service";
 })
 export class HomePage {
   homeData = data;
-  //trips: Trip[] = [];
+  trips: Trip[] = [];
   trips$!: Observable<Trip[]>;
 
   constructor(private api: ApiService) {
@@ -40,7 +40,7 @@ export class HomePage {
     this.homeData.agencies = [...data.agencies];
   }
   private subscribe() {
-    //this.api.getTrips$().subscribe({ next: (body) => (this.trips = body) });
+    this.api.getTrips$().subscribe({ next: (body) => (this.trips = body) });
   }
   private useAsyncPipe() {
     this.trips$ = this.api.getTrips$();
