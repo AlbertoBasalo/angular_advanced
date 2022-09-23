@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from "@angular/core";
 })
 export class AgenciesHeaderPipe implements PipeTransform {
   transform(agencies: any[], ...args: unknown[]): string {
-    const header = `We work with ${agencies.length} agencies`;
+    const header = `🪠 We work with ${agencies.length} agencies`;
     console.log("🪠 pipe header", header);
     return header;
   }

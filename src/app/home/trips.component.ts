@@ -1,9 +1,8 @@
-import { ChangeDetectionStrategy, Component } from "@angular/core";
-import { data } from "../data.repository";
+import { Component, Input, SimpleChanges } from "@angular/core";
+import { Trip } from "../models/trip.interface";
 
 @Component({
   selector: "app-trips",
-  changeDetection: ChangeDetectionStrategy.OnPush,
   styles: [
     `
       .green {
@@ -21,46 +20,40 @@ import { data } from "../data.repository";
     `,
   ],
   template: `
-    <app-reloading (reload)="onReload()"></app-reloading>
-    <article>
-      <h3>{{ header }}</h3>
-      <h4>{{ getHeader() }}</h4>
-      <h4>{{ header | uppercase }}</h4>
-      <ul *ngIf="trips.length > 0">
-        <li *ngFor="let trip of trips">
-          <span [ngClass]="byStatus(trip.status)">{{ trip.destination }}</span>
-          <span>💸 {{ trip.flightPrice | currency }}</span>
-          <span>⤴️ {{ trip.startDate | date: "yyyy-MMM-dd" }}</span>
-          <span>⤵️ {{ trip.endDate | date: "yyyy-MMM-dd" }}</span>
-          <span [ngClass]="byPlaces(trip.places)">🧑🏼‍🚀 {{ trip.places }}</span>
-          <span *ngIf="trip.kind === 'WithStay'">🧳</span>
-          <span *ngIf="trip.kind === 'TripOnly'">🛰️</span>
-        </li>
-      </ul>
-      <span *ngIf="trips.length <= 0">🕳️ No data yet</span>
-    </article>
+    <app-list
+      [header]="getHeader()"
+      [data]="trips"
+      [itemTemplate]="tripListItem"
+    ></app-list>
+    <ng-template #tripListItem let-context>
+      <span [ngClass]="byStatus(context.status)">
+        {{ context.destination }}
+      </span>
+      <span>💸 {{ context.flightPrice | currency }}</span>
+      <span>⤴️ {{ context.startDate | date: "yyyy-MMM-dd" }}</span>
+      <span>⤵️ {{ context.endDate | date: "yyyy-MMM-dd" }}</span>
+      <span [ngClass]="byPlaces(context.places)">🧑🏼‍🚀 {{ context.places }}</span>
+      <span *ngIf="context.kind === 'WithStay'">🧳</span>
+      <span *ngIf="context.kind === 'TripOnly'">🛰️</span>
+    </ng-template>
   `,
 })
 export class TripsComponent {
-  trips = data.trips;
-  get header() {
-    const header = `Offering ${this.trips.length} trips`;
-    console.log("property", header);
+  @Input() trips: Trip[] = [];
+  getHeader() {
+    const header = `📞 Offering ${this.trips.length} trips`;
+    console.log("📞 Method call header", header);
     return header;
   }
-  getHeader() {
-    const header = `Offering ${this.trips.length} trips`;
-    console.log("method", header);
-    return header;
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes["trips"]) {
+      console.log("⚡ change trips", this.trips.length);
+    }
   }
   byStatus = (status: string) => (status === "Confirmed" ? "green" : "orange");
   byPlaces = (places: number) => {
-    // console.log("places", places);
     if (places === 0) return "sold-out";
     if (places < 8) return "few-places";
     return "";
   };
-  onReload() {
-    this.trips = data.trips;
-  }
 }

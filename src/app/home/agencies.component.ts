@@ -1,14 +1,8 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  OnChanges,
-  SimpleChanges,
-} from "@angular/core";
+import { Component, Input, OnChanges, SimpleChanges } from "@angular/core";
+import { Agency } from "../models/agency.interface";
 
 @Component({
   selector: "app-agencies",
-  changeDetection: ChangeDetectionStrategy.OnPush,
   styles: [
     `
       .active {
@@ -21,25 +15,22 @@ import {
     `,
   ],
   template: `
-    <button (click)="onClick()">click me</button>
-    <app-list
-      [header]="header"
-      [data]="agencies"
-      [dataTemplate]="agencyListItem"
-    ></app-list>
-    <app-list
-      [header]="agencies | agenciesHeader"
-      [data]="agencies"
-      [dataTemplate]="agencyListItem"
-    ></app-list>
-    <app-list
+    <h1>{{ getHeader() }}</h1>
+    <h1>{{ header }}</h1>
+    <h4>{{ agencies | agenciesHeader }}</h4>
+    <h3>{{ agenciesHeader }}</h3>
+    <button (click)="onClick()"></button>
+
+    <!-- <app-list
       [header]="agenciesHeader"
       [data]="agencies"
-      [dataTemplate]="agencyListItem"
-    ></app-list>
+      [itemTemplate]="agencyListItem"
+    ></app-list> -->
     <ng-template #agencyListItem let-context>
-      <span [ngClass]="byStatus(context.status)">{{ context.name }}</span>
-      <span [ngClass]="context.status | agencyStatus">{{ context.name }}</span>
+      <span [ngClass]="byStatus(context.status)">
+        {{ context.name }}
+      </span>
+      <!-- <span [ngClass]="context.status | agencyStatus">{{ context.name }}</span> -->
       <ng-container
         *ngIf="
           context.range === 'Interplanetary';
@@ -53,24 +44,32 @@ import {
   `,
 })
 export class AgenciesComponent implements OnChanges {
-  @Input() agencies: any[] = [];
-  byStatus(status: string) {
-    console.log("👩🏼‍🏭 function status", status);
-    return status.toLowerCase();
+  @Input() agencies: Agency[] = [];
+
+  getHeader() {
+    const header = `📞 We work with ${this.agencies.length} agencies`;
+    console.log("📞 Method call header", header);
+    return header;
   }
   get header() {
-    const header = `We work with ${this.agencies.length} agencies`;
-    // console.log("🏚️ property header", header);
+    const header = `🏚️ We work with ${this.agencies.length} agencies`;
+    console.log("🏚️ property accessor header", header);
     return header;
   }
   agenciesHeader = "";
   ngOnChanges(changes: SimpleChanges): void {
     if (changes["agencies"]) {
-      this.agenciesHeader = `We work with ${changes["agencies"].currentValue.length} agencies`;
-      console.log("⚡change", this.agenciesHeader);
+      this.agenciesHeader = `⚡ We work with ${changes["agencies"].currentValue.length} agencies`;
+      console.log("⚡ change header", this.agenciesHeader);
     }
   }
+
+  byStatus(status: string) {
+    console.log("📞 Method call status", status);
+    return status.toLowerCase();
+  }
+
   onClick() {
-    console.log("click");
+    console.log("🖱️ event click");
   }
 }

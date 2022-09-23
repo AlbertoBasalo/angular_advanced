@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment.prod";
 import { Agency } from "../models/agency.interface";
+import { Trip } from "../models/trip.interface";
 @Injectable({
   providedIn: "root",
 })
@@ -26,5 +27,9 @@ export class ApiService {
 
   public deleteAgency$(agencyId: string): Observable<Agency> {
     return this.http.delete<Agency>(`${this.agenciesUrl}/${agencyId}`);
+  }
+
+  public getTrips$(): Observable<Trip[]> {
+    return this.http.get<Trip[]>(this.tripsUrl);
   }
 }
