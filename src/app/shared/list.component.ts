@@ -8,7 +8,7 @@ import { Component, Input, TemplateRef } from "@angular/core";
       <ul *ngIf="data.length > 0; else noContent">
         <li *ngFor="let item of data">
           <ng-container
-            [ngTemplateOutlet]="dataTemplate"
+            [ngTemplateOutlet]="itemTemplate"
             [ngTemplateOutletContext]="{ $implicit: item }"
           ></ng-container>
         </li>
@@ -22,5 +22,5 @@ import { Component, Input, TemplateRef } from "@angular/core";
 export class ListComponent {
   @Input() header = "";
   @Input() data: unknown[] = [];
-  @Input() public dataTemplate!: TemplateRef<HTMLElement>;
+  @Input() public itemTemplate!: TemplateRef<HTMLElement>;
 }

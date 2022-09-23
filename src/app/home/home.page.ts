@@ -4,12 +4,13 @@ import { data } from "../data.repository";
 @Component({
   selector: "app-home",
   template: `
-    <app-agencies [agencies]="homeData.agencies"></app-agencies>
-    <app-trips [trips]="homeData.trips"></app-trips>
-    <app-reloading></app-reloading>
+    <app-agencies [agencies]="dataHome.agencies"></app-agencies>
+    <app-trips></app-trips>
+    <app-reloading (reload)="onReload()"></app-reloading>
   `,
   styles: [],
 })
 export class HomePage {
-  homeData = data;
+  dataHome = data;
+  onReload = () => (this.dataHome = data);
 }

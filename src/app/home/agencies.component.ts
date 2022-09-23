@@ -18,7 +18,7 @@ import { Agency } from "../models/agency.interface";
     <app-list
       [header]="getHeader()"
       [data]="agencies"
-      [dataTemplate]="agencyListItem"
+      [itemTemplate]="agencyListItem"
     ></app-list>
     <ng-template #agencyListItem let-context>
       <span [ngClass]="byStatus(context.status)">{{ context.name }}</span>
