@@ -82,4 +82,7 @@ ng g g shared/not-dirty --implements CanDeactivate
 
 # An interface to facilitate access to component status
 ng g interface models/component-status --type=interface
+
+# a component to be used as a nested route
+ng g c agencies/agency-trips
 ```
