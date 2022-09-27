@@ -8,9 +8,13 @@ import { ApiService } from "../services/api.service";
   selector: "app-home",
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <!-- <app-agencies [agencies]="homeData.agencies"></app-agencies> -->
-    <!-- <app-trips [trips]="trips"></app-trips> -->
-    <app-trips *ngIf="trips$ | async as trips" [trips]="trips"></app-trips>
+    <app-agencies [agencies]="homeData.agencies"></app-agencies>
+    <!-- ⚠️ undetectable change with OnPush strategies -->
+    <app-trips [trips]="trips"></app-trips>
+    <!-- 
+      ⚠️ change is detected in all scenarios because async pip fires change detection
+      <app-trips *ngIf="trips$ | async as trips" [trips]="trips"></app-trips> 
+    -->
     <app-reloading (reload)="onReload()"></app-reloading>
   `,
   styles: [],
@@ -21,22 +25,32 @@ export class HomePage {
   trips$!: Observable<Trip[]>; // to be used with | async pipe
 
   constructor(private api: ApiService) {
-    // this.subscribe();
-    this.useAsyncPipe();
+    // this.refreshWithDefaultOnly();
+    this.refreshWithOnPush();
   }
 
   onReload() {
     console.clear();
     console.log("♻️ reloading");
+    // this.refreshWithDefaultOnly();
+    this.refreshWithOnPush();
+  }
+
+  private refreshWithDefaultOnly() {
     this.mutateValue();
     this.subscribe();
   }
+  private refreshWithOnPush() {
+    this.changeReference();
+    this.useAsyncPipe();
+  }
+
   private mutateValue() {
-    // ⚠️ undetectable change with OnPush strategies
+    // ⚠️ undetectable change with OnPush strategies, because agencies points to the SAME reference
     this.homeData.agencies = data.agencies;
   }
   private changeReference() {
-    // ⚠️ change is detected in all scenarios
+    // ⚠️ change is detected in all scenarios, because agencies is a NEW reference
     this.homeData.agencies = [...data.agencies];
   }
   private subscribe() {

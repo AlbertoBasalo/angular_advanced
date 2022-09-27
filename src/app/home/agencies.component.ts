@@ -15,22 +15,22 @@ import { Agency } from "../models/agency.interface";
     `,
   ],
   template: `
+    <!-- samples for detecting changes -->
     <h1>{{ getHeader() }}</h1>
     <h1>{{ header }}</h1>
     <h4>{{ agencies | agenciesHeader }}</h4>
     <h3>{{ agenciesHeader }}</h3>
-    <button (click)="onClick()"></button>
+    <button (click)="onClick()">Click me</button>
 
-    <!-- <app-list
-      [header]="agenciesHeader"
+    <!-- 
+      🗑️ Remove comments for real recommended implementation
+    <app-list
+      [header]="agencies | agenciesHeader"
       [data]="agencies"
       [itemTemplate]="agencyListItem"
-    ></app-list> -->
+    ></app-list> 
     <ng-template #agencyListItem let-context>
-      <span [ngClass]="byStatus(context.status)">
-        {{ context.name }}
-      </span>
-      <!-- <span [ngClass]="context.status | agencyStatus">{{ context.name }}</span> -->
+      <span [ngClass]="context.status | agencyStatus">{{ context.name }}</span>
       <ng-container
         *ngIf="
           context.range === 'Interplanetary';
@@ -41,6 +41,7 @@ import { Agency } from "../models/agency.interface";
     </ng-template>
     <ng-template #interplanetary>🪐</ng-template>
     <ng-template #orbital>🌍</ng-template>
+    -->
   `,
 })
 export class AgenciesComponent implements OnChanges {
@@ -65,11 +66,6 @@ export class AgenciesComponent implements OnChanges {
       this.agenciesHeader = `⚡ We work with ${changes["agencies"].currentValue.length} agencies`;
       console.log("⚡ change header", this.agenciesHeader);
     }
-  }
-
-  byStatus(status: string) {
-    console.log("📞 Method call status", status);
-    return status.toLowerCase();
   }
 
   onClick() {
