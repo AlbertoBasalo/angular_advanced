@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input } from "@angular/core";
 import { Agency } from "../models/agency.interface";
 
 @Component({
@@ -6,15 +6,15 @@ import { Agency } from "../models/agency.interface";
   template: `
     <ul>
       <li *ngFor="let agency of agencies">
-        <a [routerLink]="agency.id">{{ agency.name }}</a>
+        <p>
+          <a [routerLink]="['view', agency.id]">Visit : {{ agency.name }}</a>
+        </p>
+        <p><a [routerLink]="[agency.id, 'trips']">View Trips</a></p>
       </li>
     </ul>
   `,
   styles: [],
 })
-export class AgenciesList implements OnInit {
+export class AgenciesList {
   @Input() agencies: Agency[] = [];
-  constructor() {}
-
-  ngOnInit(): void {}
 }

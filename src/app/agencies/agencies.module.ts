@@ -4,12 +4,14 @@ import { CommonModule } from '@angular/common';
 import { AgenciesRoutingModule } from './agencies-routing.module';
 import { AgenciesPage } from './agencies.page';
 import { AgenciesList } from './agencies.list';
+import { AgencyTripsComponent } from './agency-trips.component';
 
 
 @NgModule({
   declarations: [
     AgenciesPage,
-    AgenciesList
+    AgenciesList,
+    AgencyTripsComponent
   ],
   imports: [
     CommonModule,

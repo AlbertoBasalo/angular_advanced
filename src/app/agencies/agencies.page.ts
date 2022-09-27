@@ -13,17 +13,14 @@ import { ApiService } from "../services/api.service";
         [agencies]="agencies"
       ></app-agencies-list>
     </article>
+    <router-outlet></router-outlet>
   `,
   styles: [],
 })
 export class AgenciesPage {
-  // agencies = this.data.getAgencies();
-  // agencies: Agency[] = [];
   agencies$: Observable<Agency[]> = this.api.getAgencies$();
 
-  constructor(private router: Router, private api: ApiService) {
-    // api.getAgencies$().subscribe({ next: (body) => (this.agencies = body) });
-  }
+  constructor(private router: Router, private api: ApiService) {}
 
-  onNewClick = () => this.router.navigate(["agencies", "new"]);
+  onNewClick = () => this.router.navigate(["agencies", "agency", "new"]);
 }
