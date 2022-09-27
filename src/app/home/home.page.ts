@@ -16,9 +16,9 @@ import { ApiService } from "../services/api.service";
   styles: [],
 })
 export class HomePage {
-  homeData = data;
-  trips: Trip[] = [];
-  trips$!: Observable<Trip[]>;
+  homeData = data; // to be used as object.property
+  trips: Trip[] = []; // to be used directly
+  trips$!: Observable<Trip[]>; // to be used with | async pipe
 
   constructor(private api: ApiService) {
     // this.subscribe();
@@ -40,9 +40,11 @@ export class HomePage {
     this.homeData.agencies = [...data.agencies];
   }
   private subscribe() {
+    // ⚠️ undetectable change with OnPush strategies
     this.api.getTrips$().subscribe({ next: (body) => (this.trips = body) });
   }
   private useAsyncPipe() {
+    // ⚠️ the async pip fires change detection loop
     this.trips$ = this.api.getTrips$();
   }
 }
