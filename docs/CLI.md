@@ -63,3 +63,23 @@ ng g c your-component -c=onPush
 ng g pipe home/agency-status
 ng g pipe home/agencies-header
 ```
+
+## 3-router
+
+- Can Load guard to prevent loading data before page load
+- Protect against unauthorized access, prevent downloading the lazy module
+
+```bash
+# Register the guard on the router with the loadChildren function
+# Redirect user to login, but with returnUrl as a parameter
+ng g g auth/authenticated --implements CanLoad
+
+# A service to store authentication status
+ng g s auth/authentication
+
+# A guard that checks if a component is dirty or can leave anyway
+ng g g shared/not-dirty --implements CanDeactivate
+
+# An interface to facilitate access to component status
+ng g interface models/component-status --type=interface
+```
