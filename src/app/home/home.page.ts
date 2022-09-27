@@ -19,19 +19,23 @@ export class HomePage {
   trips$!: Observable<Trip[]>;
 
   constructor(private api: ApiService) {
-    this.useAsyncPipe();
+    this.refreshWithOnPush();
   }
 
   onReload() {
     console.clear();
     console.log("♻️ reloading");
+    this.refreshWithOnPush();
+  }
+
+  private refreshWithOnPush() {
     this.changeReference();
+    this.useAsyncPipe();
   }
 
   private changeReference() {
-    this.homeData.agencies = data.agencies;
+    this.homeData.agencies = [...data.agencies];
   }
-
   private useAsyncPipe() {
     this.trips$ = this.api.getTrips$();
   }

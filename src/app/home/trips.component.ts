@@ -41,8 +41,7 @@ import { Trip } from "../models/trip.interface";
 export class TripsComponent {
   @Input() trips: Trip[] = [];
   getHeader() {
-    const header = `📞 Offering ${this.trips.length} trips`;
-    console.log("📞 Method call header", header);
+    const header = `Offering ${this.trips.length} trips`;
     return header;
   }
   byStatus = (status: string) => (status === "Confirmed" ? "green" : "orange");
