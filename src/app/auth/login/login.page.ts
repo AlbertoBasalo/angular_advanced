@@ -32,6 +32,7 @@ export class LoginPage implements ComponentStatus {
   ) {}
 
   canDeactivate(): boolean {
+    // * called from guards
     const hasPendingChanges = this.formGroup.dirty;
     if (hasPendingChanges) {
       const userWants = window.confirm("Exit without save?");

@@ -21,6 +21,10 @@ export class AuthenticatedGuard implements CanLoad {
     | boolean
     | UrlTree {
     if (this.authentication.user.isAuthenticated) return true;
+    return this.redirectToLogin();
+  }
+
+  private redirectToLogin(): UrlTree {
     const navigationPath = ["auth", "login"];
     const returnUrl = this.router
       .getCurrentNavigation()
