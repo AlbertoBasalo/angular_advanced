@@ -85,4 +85,7 @@ ng g interface models/component-status --type=interface
 
 # a component to be used as a nested route
 ng g c agencies/agency-trips
+
+# resolver dedicated to fetch data for a page
+ng g r agencies/agencies-view/agencies-view
 ```

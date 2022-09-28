@@ -1,42 +1,46 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Agency } from "src/app/models/agency.interface";
 import { ApiService } from "src/app/services/api.service";
-import { HelperService } from "src/app/services/helper.service";
 
 @Component({
   selector: "app-agencies-view",
   template: `
     <article>
-      <h2>{{ agency?.name }}</h2>
+      <h2>{{ agency.name }}</h2>
       <pre> {{ agency | json }} </pre>
       <button (click)="onRemove()">➖ Remove Agency</button>
     </article>
   `,
   styles: [],
 })
-export class AgenciesViewPage implements OnInit {
-  agencyId = "";
-  agency: Agency | undefined;
+export class AgenciesViewPage {
+  // agencyId = "";
+  // agency: Agency | undefined;
+
+  agency: Agency; // * never null at this point
 
   constructor(
-    private route: ActivatedRoute,
+    route: ActivatedRoute,
     private router: Router,
-    private helper: HelperService,
     private api: ApiService
-  ) {}
-
-  ngOnInit(): void {
-    this.agencyId = this.helper.getIdFromRoute(this.route);
-    // this.agency = this.data.getAgencyById(this.agencyId);
-    this.api.getAgencyById$(this.agencyId).subscribe({
-      next: (body) => (this.agency = body),
-    });
+  ) {
+    // * data is assured to be ready
+    this.agency = route.snapshot.data["agency"];
   }
+
+  // * no init needed
+  // ngOnInit(): void {
+  //   this.agencyId = this.helper.getIdFromRoute(this.route);
+  //   // this.agency = this.data.getAgencyById(this.agencyId);
+  //   this.api.getAgencyById$(this.agencyId).subscribe({
+  //     next: (body) => (this.agency = body),
+  //   });
+  // }
 
   onRemove() {
     this.api
-      .deleteAgency$(this.agencyId)
+      .deleteAgency$(this.agency.id)
       .subscribe(() => this.router.navigate(["agencies"]));
   }
 }
