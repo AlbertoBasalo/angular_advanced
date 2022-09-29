@@ -13,7 +13,8 @@ import { ApiService } from "../services/api.service";
         [agencies]="agencies"
       ></app-agencies-list>
     </article>
-    <router-outlet></router-outlet>
+    <!-- <router-outlet></router-outlet> -->
+    <app-agency-trips></app-agency-trips>
   `,
   styles: [],
 })
@@ -22,5 +23,5 @@ export class AgenciesPage {
 
   constructor(private router: Router, private api: ApiService) {}
 
-  onNewClick = () => this.router.navigate(["agencies", "agency", "new"]);
+  onNewClick = () => this.router.navigate(["/", "agencies", "agency", "new"]);
 }

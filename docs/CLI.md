@@ -88,4 +88,14 @@ ng g c agencies/agency-trips
 
 # resolver dedicated to fetch data for a page
 ng g r agencies/agencies-view/agencies-view
+
+
+
+
+### TO DO :
+# ASYNC PARAMETERS (AGENCIES -> ?/SELECTED=AGENCY_ID )
+# NESTED ROUTES (ABOUT US -> HISTORY, MISSION, CREW...)
+# AUXILIARY ROUTES ()
+# ROUTER EVENTS (LOGS, META, ... TITLE!)
+
 ```

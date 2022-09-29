@@ -18,6 +18,7 @@ export class AgenciesViewResolver implements Resolve<Agency> {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<Agency> {
+    // * uses params and services and return observables
     const agencyId = route.paramMap.get("id") || "";
     return this.api.getAgencyById$(agencyId);
   }

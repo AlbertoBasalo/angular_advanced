@@ -7,8 +7,8 @@ import { HelperService } from "../services/helper.service";
   selector: "app-agency-trips",
   template: `
     <h3>Showing trips for agency...</h3>
-    <h4>{{ agency$ | async }}</h4>
-    <h6>{{ agency }}</h6>
+    <h4>♻️ {{ agency$ | async }}</h4>
+    <h6>⚠️ {{ agency }}</h6>
   `,
   styles: [],
 })
@@ -16,7 +16,9 @@ export class AgencyTripsComponent {
   agency$;
   agency = "";
   constructor(route: ActivatedRoute, helper: HelperService) {
+    // * ♻️ updated by observing route changes
     this.agency$ = route.paramMap.pipe(map((paramMap) => paramMap.get("id")));
-    this.agency = helper.getIdFromRoute(route); // ⚠️ unchanged, same component instance
+    // ! ⚠️ unchanged, same component instance
+    this.agency = helper.getIdFromRoute(route);
   }
 }
