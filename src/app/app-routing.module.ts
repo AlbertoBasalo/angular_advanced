@@ -8,10 +8,15 @@ import { HomePage } from "./home/home.page";
 const routes: Routes = [
   {
     path: "",
+    title: "Astro Bookings",
     component: HomePage,
   },
   {
     path: "about",
+    title: "About us",
+    data: {
+      title: "About us",
+    },
     component: AboutPage,
     children: [
       {
@@ -26,6 +31,9 @@ const routes: Routes = [
   },
   {
     path: "contact",
+    data: {
+      title: "Contact",
+    },
     loadChildren: () =>
       import("./contact/contact.module").then((m) => m.ContactModule),
   },
