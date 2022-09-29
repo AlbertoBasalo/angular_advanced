@@ -51,6 +51,7 @@ import { HelperService } from "../services/helper.service";
       <button (click)="onSendClick()" [disabled]="formGroup.invalid">
         Send
       </button>
+      <span [routerLink]="['/', 'about']">About us</span>
     </form>
   `,
   styles: [],
