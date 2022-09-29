@@ -4,12 +4,18 @@ import { AboutPage } from "./about/about.page";
 import { HistoryComponent } from "./about/history.component";
 import { MissionComponent } from "./about/mission.component";
 import { HomePage } from "./home/home.page";
+import { InfoComponent } from "./info.component";
 
 const routes: Routes = [
   {
     path: "",
     title: "Astro Bookings",
     component: HomePage,
+  },
+  {
+    path: ":msg",
+    outlet: "info",
+    component: InfoComponent,
   },
   {
     path: "about",

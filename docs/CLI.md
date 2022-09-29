@@ -92,10 +92,8 @@ ng g r agencies/agencies-view/agencies-view
 
 # ASYNC PARAMETERS (AGENCIES -> ?/SELECTED=AGENCY_ID )
 # NESTED ROUTES (ABOUT US -> HISTORY, MISSION...)
-
-
-### TO DO :
 # AUXILIARY ROUTES ()
 # ROUTER EVENTS (LOGS, META, ... TITLE!)
+
 
 ```

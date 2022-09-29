@@ -42,7 +42,9 @@ export class LoginPage implements ComponentStatus {
   }
 
   onGoHomeClick() {
-    this.router.navigateByUrl("/");
+    this.router.navigate([
+      { outlets: { primary: ["/"], info: ["exit with out log in"] } },
+    ]);
   }
   onLogInClick() {
     console.log("Simulated Login");
@@ -52,6 +54,10 @@ export class LoginPage implements ComponentStatus {
   }
   private navigateBack() {
     const returnUrl = this.route.snapshot.queryParams["returnUrl"] || "/";
-    this.router.navigateByUrl(returnUrl);
+    this.router.navigate([
+      {
+        outlets: { primary: returnUrl, info: "👋🏼 logged in" },
+      },
+    ]);
   }
 }

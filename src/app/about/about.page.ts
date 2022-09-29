@@ -7,8 +7,8 @@ import { Component } from "@angular/core";
       <h1>ℹ️ About us</h1>
       <p>Astro Bookings, fly to the universe!</p>
       <nav>
-        <a routerLink="history">Our history</a>
-        <a routerLink="mission">Our mission</a>
+        <a routerLink="history">📜 Our history</a>
+        <a routerLink="mission">⛰️ Our mission</a>
       </nav>
       <footer>
         <!-- ⚠️ linked to children property of this route -->
