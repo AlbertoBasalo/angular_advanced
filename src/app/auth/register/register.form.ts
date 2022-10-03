@@ -1,12 +1,25 @@
-import { Component, EventEmitter, Output } from "@angular/core";
+import { Component } from "@angular/core";
 import { AbstractControl, FormBuilder, FormControl } from "@angular/forms";
-import { Credentials } from "src/app/models/credentials.interface";
 import { ValidationService } from "src/app/services/validation.service";
 
 @Component({
-  selector: "app-login-form",
+  selector: "app-register-form",
   template: `
     <form [formGroup]="formGroup">
+      <div>
+        <label for="name">Your name</label>
+        <input
+          id="name"
+          name="name"
+          type="text"
+          placeholder="Your name"
+          formControlName="name"
+          [attr.aria-invalid]="hasError('name')"
+        />
+        <small *ngIf="mustShowMessage('name')">
+          {{ getErrorMessage("name") }}
+        </small>
+      </div>
       <div>
         <label for="email">Your email address</label>
         <input
@@ -35,32 +48,56 @@ import { ValidationService } from "src/app/services/validation.service";
           {{ getErrorMessage("password") }}
         </small>
       </div>
-      <button (click)="onLogInClick()">Log me in</button>
-      <button (click)="onGoHomeClick()">Go Home</button>
+      <div>
+        <label for="confirmPassword">Repeat Password</label>
+        <input
+          id="confirmPassword"
+          name="confirmPassword"
+          type="password"
+          placeholder="confirm password"
+          formControlName="confirmPassword"
+          [attr.aria-invalid]="hasError('confirmPassword')"
+        />
+        <small *ngIf="mustShowMessage('confirmPassword')">
+          {{ getErrorMessage("confirmPassword") }}
+        </small>
+      </div>
+      <small *ngIf="mustShowMessage('form')">
+        {{ getErrorMessage("form") }}
+      </small>
+      <button [disabled]="formGroup.invalid" (click)="onRegisterClick()">
+        Register
+      </button>
     </form>
   `,
   styles: [],
 })
-export class LoginForm {
-  @Output() login = new EventEmitter<Credentials>();
-  @Output() goHome = new EventEmitter();
-  @Output() formDirty = new EventEmitter<boolean>();
-
-  formGroup = this.formBuilder.group({
-    email: new FormControl("", this.validation.emailValidations),
-    password: new FormControl("", this.validation.passwordValidations),
-  });
+export class RegisterForm {
+  formGroup = this.formBuilder.group(
+    {
+      name: new FormControl("", this.validation.nameValidations),
+      email: new FormControl("", this.validation.emailValidations),
+      password: new FormControl("", this.validation.passwordValidations),
+      confirmPassword: new FormControl("", this.validation.passwordValidations),
+    },
+    {
+      validators: this.validation.passwordMatch,
+    }
+  );
 
   constructor(
     private formBuilder: FormBuilder,
     private validation: ValidationService
-  ) {
-    this.formGroup.valueChanges.subscribe((change) => {
-      this.formDirty.emit(this.formGroup.dirty);
-    });
+  ) {}
+
+  onRegisterClick() {
+    throw new Error("Method not implemented.");
   }
 
   getControl(controlName: string): AbstractControl | null {
+    if (controlName === "form") {
+      return this.formGroup;
+    }
     return this.formGroup.get(controlName);
   }
   hasError(controlName: string): boolean {
@@ -77,13 +114,5 @@ export class LoginForm {
   getErrorMessage(controlName: string): string {
     const control = this.getControl(controlName);
     return this.validation.getErrorMessage(control);
-  }
-
-  onLogInClick() {
-    this.formGroup.markAsPristine();
-    this.login.emit(this.formGroup.getRawValue());
-  }
-  onGoHomeClick() {
-    this.goHome.emit();
   }
 }
