@@ -20,8 +20,8 @@ export class AppComponent {
   constructor(router: Router, titleService: Title) {
     router.events
       .pipe(
-        tap((event) => console.log("re", event)),
         filter((event) => event instanceof NavigationEnd),
+        tap((event) => console.log("navigation", event)),
         map(() => this.getTitle(router))
       )
       .subscribe((title: string) =>

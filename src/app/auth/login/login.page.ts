@@ -40,6 +40,7 @@ export class LoginPage implements ComponentStatus {
   }
   onLogIn(credentials: Credentials) {
     console.log("Simulated Login", credentials);
+    this.isFormDirty = false;
     this.authentication.user.isAuthenticated = true;
     this.navigateBack();
   }
