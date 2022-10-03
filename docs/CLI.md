@@ -103,3 +103,12 @@ ng g c info
 
 
 ```
+
+## 4-Forms
+
+```
+ng g c auth/login/login --type=form
+ng g i models/credentials --type=interface
+ng g s services/validation
+
+```
