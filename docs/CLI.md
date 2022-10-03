@@ -111,4 +111,5 @@ ng g c auth/login/login --type=form
 ng g i models/credentials --type=interface
 ng g s services/validation
 
+ng g c shared/email --type=control --export
 ```

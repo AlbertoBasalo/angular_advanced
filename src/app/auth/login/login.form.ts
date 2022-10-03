@@ -7,7 +7,7 @@ import { ValidationService } from "src/app/services/validation.service";
   selector: "app-login-form",
   template: `
     <form [formGroup]="formGroup">
-      <div>
+      <!-- <div>
         <label for="email">Your email address</label>
         <input
           id="email"
@@ -20,7 +20,8 @@ import { ValidationService } from "src/app/services/validation.service";
         <small *ngIf="mustShowMessage('name')">
           {{ getErrorMessage("name") }}
         </small>
-      </div>
+      </div> -->
+      <app-email-control formControlName="email"></app-email-control>
       <div>
         <label for="password">Your password</label>
         <input
@@ -47,7 +48,7 @@ export class LoginForm {
   @Output() formDirty = new EventEmitter<boolean>();
 
   formGroup = this.formBuilder.group({
-    email: new FormControl("", this.validation.emailValidations),
+    email: "albertoBasalo@hotmail.com",
     password: new FormControl("", this.validation.passwordValidations),
   });
 
@@ -81,7 +82,12 @@ export class LoginForm {
 
   onLogInClick() {
     this.formGroup.markAsPristine();
-    this.login.emit(this.formGroup.getRawValue());
+    const rawCredentials = this.formGroup.value;
+    const credentials = {
+      email: (rawCredentials.email as any).email || rawCredentials.email,
+      password: rawCredentials.password,
+    };
+    this.login.emit(credentials);
   }
   onGoHomeClick() {
     this.goHome.emit();
