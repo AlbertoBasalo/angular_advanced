@@ -91,9 +91,15 @@ ng g r agencies/agencies-view/agencies-view
 
 
 # ASYNC PARAMETERS (AGENCIES -> ?/SELECTED=AGENCY_ID )
-# ROUTER EVENTS (LOGS, META, ... TITLE!)
+ng g c agencies/agency-trips
+
+# ROUTER EVENTS (LOGS, META, ... TITLE! on app.component)
+
 # NESTED ROUTES (ABOUT US -> HISTORY, MISSION...)
+ng g c about/history
+ng g c about/mission
 # AUXILIARY ROUTES (footer)
+ng g c info
 
 
 ```
