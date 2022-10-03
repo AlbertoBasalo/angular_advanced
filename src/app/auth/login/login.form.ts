@@ -22,7 +22,7 @@ import { ValidationService } from "src/app/services/validation.service";
         </small>
       </div> -->
       <app-email-control formControlName="email"></app-email-control>
-      <div>
+      <!-- <div>
         <label for="password">Your password</label>
         <input
           id="password"
@@ -35,7 +35,12 @@ import { ValidationService } from "src/app/services/validation.service";
         <small *ngIf="mustShowMessage('password')">
           {{ getErrorMessage("password") }}
         </small>
-      </div>
+      </div> -->
+      <app-input-control
+        type="password"
+        formControlName="password"
+        [control]="getControl('password')"
+      ></app-input-control>
       <button (click)="onLogInClick()">Log me in</button>
       <button (click)="onGoHomeClick()">Go Home</button>
     </form>
