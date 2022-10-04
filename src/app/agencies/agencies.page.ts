@@ -13,7 +13,6 @@ import { ApiService } from "../services/api.service";
         [agencies]="agencies"
       ></app-agencies-list>
     </article>
-    <!-- <router-outlet></router-outlet> -->
     <app-agency-trips></app-agency-trips>
   `,
   styles: [],

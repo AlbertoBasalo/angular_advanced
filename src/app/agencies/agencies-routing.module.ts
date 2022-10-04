@@ -7,12 +7,6 @@ const routes: Routes = [
   {
     path: "",
     component: AgenciesPage,
-    // children: [
-    //   {
-    //     path: ":id/trips",
-    //     component: AgencyTripsComponent,
-    //   },
-    // ],
   },
   {
     path: "agency/new",
