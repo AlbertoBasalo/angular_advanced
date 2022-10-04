@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Inject, Injectable } from "@angular/core";
 import { environment } from "src/environments/environment";
 import { LoggerBaseService } from "./logger-base.service";
@@ -36,6 +36,10 @@ export class LoggerHttpService extends LoggerBaseService {
     });
   }
   error(message: string, error: Error) {
+    if (error instanceof HttpErrorResponse) {
+      console.warn("HttpErrorResponse not sent", error);
+      return;
+    }
     this.postLogEntry({
       timestamp: new Date().toISOString(),
       message,
