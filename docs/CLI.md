@@ -115,4 +115,5 @@ ng g c shared/email --type=control --export
 ng g c shared/input --type=control --export
 
 ng g class shared/control --type=base
+ng g class shared/form --type=base
 ```
