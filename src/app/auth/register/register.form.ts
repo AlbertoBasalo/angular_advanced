@@ -6,7 +6,7 @@ import { ValidationService } from "src/app/services/validation.service";
   selector: "app-register-form",
   template: `
     <form [formGroup]="formGroup">
-      <div>
+      <!-- <div>
         <label for="name">Your name</label>
         <input
           id="name"
@@ -19,22 +19,8 @@ import { ValidationService } from "src/app/services/validation.service";
         <small *ngIf="mustShowMessage('name')">
           {{ getErrorMessage("name") }}
         </small>
-      </div>
-      <div>
-        <label for="email">Your email address</label>
-        <input
-          id="email"
-          name="email"
-          type="email"
-          placeholder="Your email address"
-          formControlName="email"
-          [attr.aria-invalid]="hasError('email')"
-        />
-        <small *ngIf="mustShowMessage('name')">
-          {{ getErrorMessage("name") }}
-        </small>
-      </div>
-      <div>
+      </div> -->
+      <!-- <div>
         <label for="password">Your password</label>
         <input
           id="password"
@@ -47,8 +33,8 @@ import { ValidationService } from "src/app/services/validation.service";
         <small *ngIf="mustShowMessage('password')">
           {{ getErrorMessage("password") }}
         </small>
-      </div>
-      <div>
+      </div> -->
+      <!-- <div>
         <label for="confirmPassword">Repeat Password</label>
         <input
           id="confirmPassword"
@@ -61,7 +47,26 @@ import { ValidationService } from "src/app/services/validation.service";
         <small *ngIf="mustShowMessage('confirmPassword')">
           {{ getErrorMessage("confirmPassword") }}
         </small>
-      </div>
+      </div> -->
+      <app-input-control
+        label="Your name"
+        formControlName="name"
+        type="text"
+        [control]="getControl('name')"
+      ></app-input-control>
+      <app-email-control formControlName="email"></app-email-control>
+      <app-input-control
+        label="Your password"
+        formControlName="password"
+        type="password"
+        [control]="getControl('password')"
+      ></app-input-control>
+      <app-input-control
+        label="Repeat password"
+        formControlName="confirmPassword"
+        type="password"
+        [control]="getControl('confirmPassword')"
+      ></app-input-control>
       <small *ngIf="mustShowMessage('form')">
         {{ getErrorMessage("form") }}
       </small>
@@ -69,20 +74,21 @@ import { ValidationService } from "src/app/services/validation.service";
         Register
       </button>
     </form>
+    <pre>Errors : {{ formGroup.errors | json }}</pre>
+    <pre>Invalid : {{ formGroup.invalid | json }}</pre>
+    <pre>Valid : {{ formGroup.valid | json }}</pre>
   `,
   styles: [],
 })
 export class RegisterForm {
   formGroup = this.formBuilder.group(
     {
-      name: new FormControl("", this.validation.nameValidations),
-      email: new FormControl("", this.validation.emailValidations),
-      password: new FormControl("", this.validation.passwordValidations),
-      confirmPassword: new FormControl("", this.validation.passwordValidations),
+      name: new FormControl("", this.validation.nameValidator),
+      email: new FormControl("", this.validation.emailValidator),
+      password: new FormControl("", this.validation.passwordValidators),
+      confirmPassword: new FormControl("", this.validation.passwordValidators),
     },
-    {
-      validators: this.validation.passwordMatch,
-    }
+    { validators: this.validation.passwordMatch }
   );
 
   constructor(
@@ -91,7 +97,7 @@ export class RegisterForm {
   ) {}
 
   onRegisterClick() {
-    throw new Error("Method not implemented.");
+    console.log("Registering...", this.formGroup.value);
   }
 
   getControl(controlName: string): AbstractControl | null {

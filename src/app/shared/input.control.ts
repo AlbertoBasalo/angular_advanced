@@ -9,18 +9,23 @@ import { ValidationService } from "../services/validation.service";
 @Component({
   selector: "app-input-control",
   template: `
-    <label [for]="formControlName">{{ label || formControlName }}</label>
-    <input
-      [type]="type"
-      [id]="formControlName"
-      [name]="formControlName"
-      [placeholder]="placeholder || label || formControlName"
-      [attr.aria-invalid]="hasError()"
-      [value]="value"
-      (keyup)="onChange($event)"
-      (blur)="onBlur()"
-    />
-    <small *ngIf="mustShowMessage()">{{ getErrorMessage() }}</small>
+    <div>
+      <label [for]="formControlName">{{ label | uppercase }}</label>
+      <small *ngIf="mustShowMessage()">
+        {{ getErrorMessage() }}
+      </small>
+      <input
+        [id]="formControlName"
+        [name]="formControlName"
+        [type]="type"
+        [placeholder]="label"
+        [value]="value"
+        [attr.aria-invalid]="hasError()"
+        [disabled]="isDisabled"
+        (blur)="touchedCallback()"
+        (keyup)="onChange($event)"
+      />
+    </div>
   `,
   styles: [],
   providers: [
@@ -28,40 +33,37 @@ import { ValidationService } from "../services/validation.service";
   ],
 })
 export class InputControl implements ControlValueAccessor {
+  @Input() label: string = "";
   @Input() formControlName: string = "";
-  @Input() type: "text" | "password" | "email" | "number" = "text";
-  @Input() label!: string;
-  @Input() placeholder!: string;
-  // * the control instance is created in the parent form
+  @Input() type: "text" | "password" | "number" = "text";
   @Input() control!: AbstractControl | null;
 
-  // * Control Value accessor methods
   value: any;
-  private changedCallback!: (value: any) => void;
-  private touchedCallback!: () => void;
+  isDisabled: boolean = false;
+  changeCallback!: (value: any) => void;
+  touchedCallback!: () => void;
 
   constructor(private validation: ValidationService) {}
 
-  ngOnInit(): void {}
+  onChange(event: any) {
+    const value = event.target.value;
+    this.changeCallback(value);
+  }
 
   writeValue(value: any): void {
+    console.log("writeValue", value);
     this.value = value;
   }
   registerOnChange(changeCallBack: (nv: any) => void): void {
-    this.changedCallback = changeCallBack;
+    console.log("registerOnChange");
+    this.changeCallback = changeCallBack;
   }
   registerOnTouched(touchedCallback: () => void): void {
+    console.log("registerOnTouched");
     this.touchedCallback = touchedCallback;
   }
-
-  // * template events handlers
-  onChange(event: any) {
-    this.value = event.target.value;
-    this.changedCallback(this.value);
-    this.touchedCallback();
-  }
-  onBlur() {
-    this.touchedCallback();
+  setDisabledState?(isDisabled: boolean): void {
+    this.isDisabled = isDisabled;
   }
 
   hasError(): boolean {

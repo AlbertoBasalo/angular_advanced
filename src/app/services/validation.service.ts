@@ -5,9 +5,9 @@ import { AbstractControl, ValidationErrors, Validators } from "@angular/forms";
   providedIn: "root",
 })
 export class ValidationService {
-  nameValidations = [Validators.required, Validators.minLength(2)];
-  emailValidations = [Validators.required, Validators.email];
-  passwordValidations = [
+  nameValidator = [Validators.required, Validators.minLength(3)];
+  emailValidator = [Validators.required, Validators.email];
+  passwordValidators = [
     Validators.required,
     Validators.minLength(4),
     Validators.maxLength(8),

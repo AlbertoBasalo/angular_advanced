@@ -9,92 +9,80 @@ import { ValidationService } from "src/app/services/validation.service";
     <form [formGroup]="formGroup">
       <!-- <div>
         <label for="email">Your email address</label>
+        <small *ngIf="mustShowError('email')">
+          {{ getErrorMessage("email") }}
+        </small>
         <input
           id="email"
           name="email"
           type="email"
-          placeholder="Your email address"
           formControlName="email"
+          placeholder="email address"
           [attr.aria-invalid]="hasError('email')"
         />
-        <small *ngIf="mustShowMessage('name')">
-          {{ getErrorMessage("name") }}
-        </small>
       </div> -->
       <app-email-control formControlName="email"></app-email-control>
-      <!-- <div>
-        <label for="password">Your password</label>
-        <input
-          id="password"
-          name="password"
-          type="password"
-          placeholder="password"
-          formControlName="password"
-          [attr.aria-invalid]="hasError('password')"
-        />
-        <small *ngIf="mustShowMessage('password')">
-          {{ getErrorMessage("password") }}
-        </small>
-      </div> -->
+
       <app-input-control
         type="password"
         formControlName="password"
+        label="Your password"
         [control]="getControl('password')"
       ></app-input-control>
-      <button (click)="onLogInClick()">Log me in</button>
+      <button [disabled]="formGroup.invalid" (click)="onLogInClick()">
+        Log me in
+      </button>
       <button (click)="onGoHomeClick()">Go Home</button>
     </form>
+    <pre>Errors : {{ formGroup.errors | json }}</pre>
+    <pre>Invalid : {{ formGroup.invalid | json }}</pre>
+    <pre>Valid : {{ formGroup.valid | json }}</pre>
   `,
   styles: [],
 })
 export class LoginForm {
-  @Output() login = new EventEmitter<Credentials>();
+  @Output() logIn = new EventEmitter<Credentials>();
   @Output() goHome = new EventEmitter();
   @Output() formDirty = new EventEmitter<boolean>();
 
+  emailControl = new FormControl("");
+  passwordControl = new FormControl("", this.validation.passwordValidators);
+
   formGroup = this.formBuilder.group({
-    email: "albertoBasalo@hotmail.com",
-    password: new FormControl("", this.validation.passwordValidations),
+    email: this.emailControl,
+    password: this.passwordControl,
   });
 
   constructor(
     private formBuilder: FormBuilder,
     private validation: ValidationService
-  ) {
-    this.formGroup.valueChanges.subscribe((change) => {
-      this.formDirty.emit(this.formGroup.dirty);
-    });
-  }
+  ) {}
 
   getControl(controlName: string): AbstractControl | null {
     return this.formGroup.get(controlName);
   }
-  hasError(controlName: string): boolean {
+  hasError(controlName: string) {
     const control = this.getControl(controlName);
     if (!control) return false;
     return control.invalid;
   }
-
-  mustShowMessage(controlName: string): boolean {
+  mustShowError(controlName: string) {
     const control = this.getControl(controlName);
     return this.validation.mustShowMessage(control);
   }
-
-  getErrorMessage(controlName: string): string {
+  getErrorMessage(controlName: string) {
     const control = this.getControl(controlName);
     return this.validation.getErrorMessage(control);
   }
 
   onLogInClick() {
-    this.formGroup.markAsPristine();
     const rawCredentials = this.formGroup.value;
     const credentials = {
       email: (rawCredentials.email as any).email || rawCredentials.email,
       password: rawCredentials.password,
     };
-    this.login.emit(credentials);
+    console.log("credentials", credentials);
+    // this.logIn.emit(credentials);
   }
-  onGoHomeClick() {
-    this.goHome.emit();
-  }
+  onGoHomeClick() {}
 }
