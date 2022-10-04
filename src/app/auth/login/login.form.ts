@@ -38,7 +38,7 @@ import { FormBase } from "src/app/shared/form.base";
   styles: [],
 })
 export class LoginForm extends FormBase {
-  @Output() logIn = new EventEmitter<Credentials>();
+  @Output() logIn = new EventEmitter<Partial<Credentials>>();
   @Output() goHome = new EventEmitter();
   @Output() formDirty = new EventEmitter<boolean>();
 

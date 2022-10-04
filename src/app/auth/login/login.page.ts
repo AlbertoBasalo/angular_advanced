@@ -9,7 +9,7 @@ import { AuthenticationService } from "../authentication.service";
   template: `
     <h2>🔐 Login with your account</h2>
     <app-login-form
-      (login)="onLogIn($event)"
+      (logIn)="onLogIn($event)"
       (goHome)="onGoHome()"
       (formDirty)="onFormDirty($event)"
     ></app-login-form>
@@ -38,7 +38,7 @@ export class LoginPage implements ComponentStatus {
       { outlets: { primary: ["/"], info: ["exit with out log in"] } },
     ]);
   }
-  onLogIn(credentials: Credentials) {
+  onLogIn(credentials: Partial<Credentials>) {
     console.log("Simulated Login", credentials);
     this.isFormDirty = false;
     this.authentication.user.isAuthenticated = true;
