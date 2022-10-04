@@ -112,4 +112,7 @@ ng g i models/credentials --type=interface
 ng g s services/validation
 
 ng g c shared/email --type=control --export
+ng g c shared/input --type=control --export
+
+ng g class shared/control --type=base
 ```

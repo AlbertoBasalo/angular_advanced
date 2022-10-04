@@ -10,13 +10,14 @@ import {
   Validator,
 } from "@angular/forms";
 import { ValidationService } from "../services/validation.service";
+import { ControlBase } from "./control.base";
 
 @Component({
   selector: "app-email-control",
   template: `
     <div [formGroup]="formGroup">
       <label for="email">Your email address</label>
-      <small *ngIf="mustShowMessage()">
+      <small *ngIf="mustShowError()">
         {{ getErrorMessage() }}
       </small>
       <input
@@ -40,38 +41,35 @@ import { ValidationService } from "../services/validation.service";
     },
   ],
 })
-export class EmailControl implements ControlValueAccessor, Validator {
+export class EmailControl
+  extends ControlBase
+  implements ControlValueAccessor, Validator
+{
   @Input() formControlName: string = "email";
 
-  control = new FormControl("", this.validation.emailValidator);
+  override control = new FormControl("", this.validation.emailValidator);
   formGroup = this.formBuilder.group({
     email: this.control,
   });
   touchedCallback!: () => void;
   validatorChangeCallback!: () => void;
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private validation: ValidationService
-  ) {}
+  constructor(private formBuilder: FormBuilder, validation: ValidationService) {
+    super(validation);
+  }
 
   validate(control: AbstractControl<any, any>): ValidationErrors | null {
-    console.log("validating", control);
     return this.control?.errors || null;
   }
   registerOnValidatorChange?(validatorChangeCallback: () => void): void {
-    console.log("registerOnValidatorChange");
     this.validatorChangeCallback = validatorChangeCallback;
   }
 
   registerOnChange(changeCallback: any): void {
-    console.log("registerOnChange");
     this.control.valueChanges.subscribe((value) => {
-      console.log("valueChanges", value);
       changeCallback(value);
       this.validatorChangeCallback();
     });
-    // this.formGroup.valueChanges.subscribe(this.validatorChangeCallback);
   }
   registerOnTouched(touchedCallback: any): void {
     this.touchedCallback = touchedCallback;
@@ -89,14 +87,5 @@ export class EmailControl implements ControlValueAccessor, Validator {
 
   getControl(controlName: string): AbstractControl | null {
     return this.formGroup.get(controlName);
-  }
-  hasError(): boolean {
-    return this.control?.invalid || false;
-  }
-  mustShowMessage(): boolean {
-    return this.validation.mustShowMessage(this.control);
-  }
-  getErrorMessage(): string {
-    return this.validation.getErrorMessage(this.control);
   }
 }

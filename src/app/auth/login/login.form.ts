@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Output } from "@angular/core";
-import { AbstractControl, FormBuilder, FormControl } from "@angular/forms";
+import { FormBuilder, FormControl } from "@angular/forms";
 import { Credentials } from "src/app/models/credentials.interface";
 import { ValidationService } from "src/app/services/validation.service";
+import { FormBase } from "src/app/shared/form.base";
 
 @Component({
   selector: "app-login-form",
@@ -22,7 +23,6 @@ import { ValidationService } from "src/app/services/validation.service";
         />
       </div> -->
       <app-email-control formControlName="email"></app-email-control>
-
       <app-input-control
         type="password"
         formControlName="password"
@@ -34,13 +34,10 @@ import { ValidationService } from "src/app/services/validation.service";
       </button>
       <button (click)="onGoHomeClick()">Go Home</button>
     </form>
-    <pre>Errors : {{ formGroup.errors | json }}</pre>
-    <pre>Invalid : {{ formGroup.invalid | json }}</pre>
-    <pre>Valid : {{ formGroup.valid | json }}</pre>
   `,
   styles: [],
 })
-export class LoginForm {
+export class LoginForm extends FormBase {
   @Output() logIn = new EventEmitter<Credentials>();
   @Output() goHome = new EventEmitter();
   @Output() formDirty = new EventEmitter<boolean>();
@@ -48,41 +45,19 @@ export class LoginForm {
   emailControl = new FormControl("");
   passwordControl = new FormControl("", this.validation.passwordValidators);
 
-  formGroup = this.formBuilder.group({
+  override formGroup = this.formBuilder.group({
     email: this.emailControl,
     password: this.passwordControl,
   });
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private validation: ValidationService
-  ) {}
-
-  getControl(controlName: string): AbstractControl | null {
-    return this.formGroup.get(controlName);
-  }
-  hasError(controlName: string) {
-    const control = this.getControl(controlName);
-    if (!control) return false;
-    return control.invalid;
-  }
-  mustShowError(controlName: string) {
-    const control = this.getControl(controlName);
-    return this.validation.mustShowMessage(control);
-  }
-  getErrorMessage(controlName: string) {
-    const control = this.getControl(controlName);
-    return this.validation.getErrorMessage(control);
+  constructor(private formBuilder: FormBuilder, validation: ValidationService) {
+    super(validation);
   }
 
   onLogInClick() {
     const rawCredentials = this.formGroup.value;
-    const credentials = {
-      email: (rawCredentials.email as any).email || rawCredentials.email,
-      password: rawCredentials.password,
-    };
-    console.log("credentials", credentials);
-    // this.logIn.emit(credentials);
+    console.log("Logging in...", rawCredentials);
+    this.logIn.emit(rawCredentials);
   }
   onGoHomeClick() {}
 }
