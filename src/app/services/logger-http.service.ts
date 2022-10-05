@@ -8,45 +8,44 @@ import { LOGGER_LEVEL, LogLevel } from "./logger.tokens";
   providedIn: "root",
 })
 export class LoggerHttpService extends LoggerBaseService {
-  logEntriesUrl = `${environment.apiServerUrl}/log-entries`;
+  private logEntriesUrl = `${environment.apiServerUrl}/log-entries`;
+
   constructor(
     private http: HttpClient,
     @Inject(LOGGER_LEVEL) loggerLevel: LogLevel
   ) {
     super();
-    this.logLevel = loggerLevel;
+    // * also with parameter on constructor
+    this.loggerLevel = loggerLevel;
   }
 
   log(message: string) {
-    if (this.logLevel == "minimal") return;
-    this.postLogEntry({
-      timestamp: new Date().toISOString(),
-      message,
-      appVersion: this.appVersion,
-      category: "log",
-    });
+    if (this.loggerLevel == "minimal") return;
+    const logEntry = this.createLogEntry(message, "log");
+    this.postLogEntry(logEntry);
   }
 
   warn(message: string) {
-    this.postLogEntry({
-      timestamp: new Date().toISOString(),
-      message,
-      appVersion: this.appVersion,
-      category: "warn",
-    });
+    const logEntry = this.createLogEntry(message, "warn");
+    this.postLogEntry(logEntry);
   }
   error(message: string, error: Error) {
     if (error instanceof HttpErrorResponse) {
-      console.warn("HttpErrorResponse not sent", error);
+      console.warn("HttpErrorResponse not sent to avoid endless loop", error);
       return;
     }
-    this.postLogEntry({
+    const logEntry = this.createLogEntry(message, "error");
+    logEntry.error = error.message;
+    this.postLogEntry(logEntry);
+  }
+
+  private createLogEntry(message: string, category: string): any {
+    return {
       timestamp: new Date().toISOString(),
       message,
       appVersion: this.appVersion,
-      category: "error",
-      error: error.message,
-    });
+      category,
+    };
   }
 
   private postLogEntry(logEntry: any) {

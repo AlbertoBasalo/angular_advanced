@@ -106,7 +106,7 @@ ng g c info
 
 ## 4-Forms
 
-```
+```bash
 ng g c auth/login/login --type=form
 ng g i models/credentials --type=interface
 ng g s services/validation
@@ -116,4 +116,14 @@ ng g c shared/input --type=control --export
 
 ng g class shared/control --type=base
 ng g class shared/form --type=base
+```
+
+## 5-Injection
+
+```bash
+ng g s services/logger-base
+ng g s services/logger-console
+ng g s services/logger-http
+# services/logger.tokens.ts
+ng g interceptor services/error
 ```

@@ -1,16 +1,17 @@
-import { Inject, Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { LoggerBaseService } from "./logger-base.service";
-import { LOGGER_LEVEL, LogLevel } from "./logger.tokens";
+import { LOGGER_LEVEL } from "./logger.tokens";
 
 @Injectable()
 export class LoggerConsoleService extends LoggerBaseService {
-  constructor(@Inject(LOGGER_LEVEL) loggerLevel: LogLevel) {
+  constructor() {
     super();
-    this.logLevel = loggerLevel;
+    // * parameter less constructor
+    this.loggerLevel = inject(LOGGER_LEVEL);
   }
 
   log(message: string) {
-    if (this.logLevel == "minimal") return;
+    if (this.loggerLevel == "minimal") return;
     console.log(this.getConsoleMessage(message));
   }
   warn(message: string) {

@@ -35,25 +35,30 @@ import {
     HttpClientModule,
   ],
   providers: [
+    // * static inversion of control
     // { provide: LoggerBaseService, useClass: LoggerConsoleService }
+    // * dynamic inversion of control (factory needs dependencies)
     // {
     //   provide: LoggerBaseService,
-    //   useFactory: (deps: HttpClient) =>
+    //   useFactory: (http: HttpClient) =>
     //     environment.production
     //       ? new LoggerConsoleService()
-    //       : new LoggerHttpService(deps),
+    //       : new LoggerHttpService(http),
     //   deps: [HttpClient],
     // },
+    // * provision of token values (could be done with a factory as well)
     { provide: LOGGER_LEVEL, useValue: "minimal" },
     { provide: LOGGER_APP_VERSION, useValue: "1.14.5" },
+    // * full example with tokens, factory and dependencies
     {
       provide: LoggerBaseService,
-      useFactory: (http: HttpClient, loggerLevel: LogLevel) =>
-        !environment.production
-          ? new LoggerConsoleService(loggerLevel)
-          : new LoggerHttpService(http, loggerLevel),
       deps: [HttpClient, LOGGER_LEVEL],
+      useFactory: (http: HttpClient, loggerLevel: LogLevel) =>
+        environment.production
+          ? new LoggerHttpService(http, loggerLevel)
+          : new LoggerConsoleService(),
     },
+    // * interceptors (using tokens as well)
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],

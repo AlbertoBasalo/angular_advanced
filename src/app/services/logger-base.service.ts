@@ -3,8 +3,9 @@ import { LOGGER_APP_VERSION, LogLevel } from "./logger.tokens";
 
 @Injectable()
 export abstract class LoggerBaseService {
-  protected logLevel: LogLevel = "verbose";
+  protected loggerLevel: LogLevel = "verbose";
   // protected appVersion = "1.0.0";
+  // * configuration based on tokens
   protected appVersion = inject(LOGGER_APP_VERSION) || "1.0.0";
 
   constructor() {}
