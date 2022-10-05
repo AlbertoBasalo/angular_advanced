@@ -54,7 +54,7 @@ import {
       provide: LoggerBaseService,
       deps: [HttpClient, LOGGER_LEVEL],
       useFactory: (http: HttpClient, loggerLevel: LogLevel) =>
-        environment.production
+        !environment.production
           ? new LoggerHttpService(http, loggerLevel)
           : new LoggerConsoleService(),
     },

@@ -1,5 +1,6 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Inject, Injectable } from "@angular/core";
+import { exhaustMap, Subject, tap } from "rxjs";
 import { environment } from "src/environments/environment";
 import { LoggerBaseService } from "./logger-base.service";
 import { LOGGER_LEVEL, LogLevel } from "./logger.tokens";
@@ -17,17 +18,18 @@ export class LoggerHttpService extends LoggerBaseService {
     super();
     // * also with parameter on constructor
     this.loggerLevel = loggerLevel;
+    this.processLogEntries$();
   }
 
   log(message: string) {
     if (this.loggerLevel == "minimal") return;
     const logEntry = this.createLogEntry(message, "log");
-    this.postLogEntry(logEntry);
+    this.queueLogEntry(logEntry);
   }
 
   warn(message: string) {
     const logEntry = this.createLogEntry(message, "warn");
-    this.postLogEntry(logEntry);
+    this.queueLogEntry(logEntry);
   }
   error(message: string, error: Error) {
     if (error instanceof HttpErrorResponse) {
@@ -36,7 +38,7 @@ export class LoggerHttpService extends LoggerBaseService {
     }
     const logEntry = this.createLogEntry(message, "error");
     logEntry.error = error.message;
-    this.postLogEntry(logEntry);
+    this.queueLogEntry(logEntry);
   }
 
   private createLogEntry(message: string, category: string): any {
@@ -48,7 +50,20 @@ export class LoggerHttpService extends LoggerBaseService {
     };
   }
 
-  private postLogEntry(logEntry: any) {
-    this.http.post(this.logEntriesUrl, logEntry).subscribe();
+  private logEntries$ = new Subject<any>();
+  private queueLogEntry(logEntry: any) {
+    this.logEntries$.next(logEntry);
+  }
+  private processLogEntries$() {
+    this.logEntries$
+      .pipe(
+        tap((logEntry) => console.log("logEntry", logEntry)),
+        exhaustMap((l) => this.createPostLogEntry$(l))
+      )
+      .subscribe((x) => console.log("log entry sent to server", x));
+  }
+
+  private createPostLogEntry$(logEntry: any) {
+    return this.http.post(this.logEntriesUrl, logEntry);
   }
 }
