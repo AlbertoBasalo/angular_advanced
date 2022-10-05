@@ -127,3 +127,11 @@ ng g s services/logger-http
 # services/logger.tokens.ts
 ng g interceptor services/error
 ```
+
+## 6-RxJs
+
+```bash
+# with changes on Angular json
+ng g m trips --route=trips --module=app
+ng g c shared/search --type=control
+```

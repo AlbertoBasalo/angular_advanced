@@ -12,7 +12,7 @@
           "inlineStyle": false,
           "flat": true,
           "skipTests": true,
-          "skipSelector": true,
+          "skipSelector": false,
           "style": "none",
           "type": "Page"
         },

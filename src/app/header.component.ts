@@ -24,6 +24,7 @@ import { Component, Input } from "@angular/core";
           <li><a routerLink="/trips">➡️ Trips</a></li>
           <li><a routerLink="/auth/register">🔏 Register</a></li>
           <li><a routerLink="/auth/login">🔐 Login</a></li>
+          <li><a routerLink="/search">🔎 Search</a></li>
         </ul>
       </nav>
     </header>
