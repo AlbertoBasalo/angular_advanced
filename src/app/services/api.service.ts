@@ -8,28 +8,32 @@ import { Trip } from "../models/trip.interface";
   providedIn: "root",
 })
 export class ApiService {
-  agenciesUrl = `${environment.apiServerUrl}/agencies`;
-  tripsUrl = `${environment.apiServerUrl}/trips`;
+  private agenciesUrl = `${environment.apiServerUrl}/agencies`;
+  private tripsUrl = `${environment.apiServerUrl}/trips`;
 
   constructor(private http: HttpClient) {}
 
-  public getAgencies$(): Observable<Agency[]> {
+  getAgencies$(): Observable<Agency[]> {
     return this.http.get<Agency[]>(this.agenciesUrl);
   }
 
-  public getAgencyById$(agencyId: string): Observable<Agency> {
+  getAgencyById$(agencyId: string): Observable<Agency> {
     return this.http.get<Agency>(`${this.agenciesUrl}/${agencyId}`);
   }
 
-  public postAgency$(agency: Agency): Observable<Agency> {
+  postAgency$(agency: Agency): Observable<Agency> {
     return this.http.post<Agency>(this.agenciesUrl, agency);
   }
 
-  public deleteAgency$(agencyId: string): Observable<Agency> {
+  deleteAgency$(agencyId: string): Observable<Agency> {
     return this.http.delete<Agency>(`${this.agenciesUrl}/${agencyId}`);
   }
 
-  public getTrips$(): Observable<Trip[]> {
+  getTrips$(): Observable<Trip[]> {
     return this.http.get<Trip[]>(this.tripsUrl);
+  }
+
+  getTripsByAgencyId$(agencyId: string): Observable<Trip[]> {
+    return this.http.get<Trip[]>(`${this.tripsUrl}?agencyId=${agencyId}`);
   }
 }
