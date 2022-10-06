@@ -354,6 +354,62 @@
       "appVersion": "1.14.5",
       "category": "warn",
       "id": 39
+    },
+    {
+      "timestamp": "2022-10-06T12:08:58.236Z",
+      "message": "AppModule constructor",
+      "appVersion": "1.14.5",
+      "category": "warn",
+      "id": 40
+    },
+    {
+      "timestamp": "2022-10-06T12:09:28.967Z",
+      "message": "AppModule constructor",
+      "appVersion": "1.14.5",
+      "category": "warn",
+      "id": 41
+    },
+    {
+      "timestamp": "2022-10-06T12:12:41.712Z",
+      "message": "AppModule constructor",
+      "appVersion": "1.14.5",
+      "category": "warn",
+      "id": 42
+    },
+    {
+      "timestamp": "2022-10-06T12:13:23.751Z",
+      "message": "AppModule constructor",
+      "appVersion": "1.14.5",
+      "category": "warn",
+      "id": 43
+    },
+    {
+      "timestamp": "2022-10-06T12:13:47.279Z",
+      "message": "AppModule constructor",
+      "appVersion": "1.14.5",
+      "category": "warn",
+      "id": 44
+    },
+    {
+      "timestamp": "2022-10-06T12:13:53.787Z",
+      "message": "AppModule constructor",
+      "appVersion": "1.14.5",
+      "category": "warn",
+      "id": 45
+    },
+    {
+      "timestamp": "2022-10-06T12:15:12.973Z",
+      "message": "AppModule constructor",
+      "appVersion": "1.14.5",
+      "category": "warn",
+      "id": 46
+    },
+    {
+      "timestamp": "2022-10-06T12:15:23.194Z",
+      "message": "AppModule constructor",
+      "appVersion": "1.14.5",
+      "category": "warn",
+      "id": 47
     }
   ]
 }

@@ -7,6 +7,7 @@ import {
   Output,
   ViewChild,
 } from "@angular/core";
+import { Router } from "@angular/router";
 import {
   debounceTime,
   distinctUntilChanged,
@@ -27,15 +28,29 @@ export class SearchControl implements AfterViewInit {
   @Output() search = new EventEmitter<string>();
   @ViewChild("searchInput", { static: true }) searchInput!: ElementRef;
 
+  constructor(private router: Router) {}
+
   ngAfterViewInit(): void {
-    this.createSearchableTerm$().subscribe((searchTerm: string) => {
-      this.search.emit(searchTerm);
-    });
+    this.createSearchableTerm$().subscribe(this.emitSearchTerm.bind(this));
   }
 
   private createSearchableTerm$() {
     const searchSource$ = fromEvent(this.searchInput.nativeElement, "input");
     return searchSource$.pipe(eventToSearchAdapter);
+  }
+
+  private emitSearchTerm(searchTerm: string) {
+    this.search.emit(searchTerm);
+    this.useUrlSearchTerm(searchTerm);
+  }
+
+  private useUrlSearchTerm(searchTerm: string) {
+    const urlTree = this.router.createUrlTree([], {
+      queryParams: { q: searchTerm },
+      queryParamsHandling: "merge",
+      preserveFragment: true,
+    });
+    this.router.navigateByUrl(urlTree);
   }
 }
 
