@@ -36,4 +36,7 @@ export class ApiService {
   getTripsByAgencyId$(agencyId: string): Observable<Trip[]> {
     return this.http.get<Trip[]>(`${this.tripsUrl}?agencyId=${agencyId}`);
   }
+  getTripsByQuery$(query: string): Observable<Trip[]> {
+    return this.http.get<Trip[]>(`${this.tripsUrl}?q=${query}`);
+  }
 }
