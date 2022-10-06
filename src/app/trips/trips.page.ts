@@ -10,17 +10,18 @@ import { ApiService } from "../services/api.service";
 
 @Component({
   template: `
-    <h2>Trips for active agencies</h2>
+    <h2>Confirmed Trips for active agencies</h2>
+
     <h3>Synchronous</h3>
-    <h4>Active agencies</h4>
+    <p>Active agencies</p>
     <pre>{{ agencies | json }}</pre>
-    <h4>Trips</h4>
+    <p>Confirmed Trips</p>
     <pre>{{ trips | json }}</pre>
 
     <h3>Asynchronous</h3>
-    <h4>Active agencies</h4>
+    <p>Active agencies</p>
     <pre>{{ agencies$ | async | json }}</pre>
-    <h4>Trips</h4>
+    <p>Confirmed Trips</p>
     <pre>{{ trips$ | async | json }}</pre>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,

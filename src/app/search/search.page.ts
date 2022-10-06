@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   template: `
@@ -12,5 +13,10 @@ export class SearchPage {
   onSearch(searchTerm: string) {
     this.searchTerm = searchTerm;
     console.log("Searching for", this.searchTerm);
+  }
+  constructor(route: ActivatedRoute) {
+    route.queryParamMap.subscribe((params) => {
+      this.searchTerm = params.get("q") || "";
+    });
   }
 }
