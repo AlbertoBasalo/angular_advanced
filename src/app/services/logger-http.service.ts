@@ -16,7 +16,6 @@ export class LoggerHttpService extends LoggerBaseService {
     @Inject(LOGGER_LEVEL) loggerLevel: LogLevel
   ) {
     super();
-    // * also with parameter on constructor
     this.loggerLevel = loggerLevel;
     this.processLogEntries$();
   }
@@ -24,12 +23,12 @@ export class LoggerHttpService extends LoggerBaseService {
   log(message: string) {
     if (this.loggerLevel == "minimal") return;
     const logEntry = this.createLogEntry(message, "log");
-    this.queueLogEntry(logEntry);
+    this.saveLogEntry(logEntry);
   }
 
   warn(message: string) {
     const logEntry = this.createLogEntry(message, "warn");
-    this.queueLogEntry(logEntry);
+    this.saveLogEntry(logEntry);
   }
   error(message: string, error: Error) {
     if (error instanceof HttpErrorResponse) {
@@ -38,7 +37,7 @@ export class LoggerHttpService extends LoggerBaseService {
     }
     const logEntry = this.createLogEntry(message, "error");
     logEntry.error = error.message;
-    this.queueLogEntry(logEntry);
+    this.saveLogEntry(logEntry);
   }
 
   private createLogEntry(message: string, category: string): any {
@@ -51,7 +50,7 @@ export class LoggerHttpService extends LoggerBaseService {
   }
 
   private logEntries$ = new Subject<any>();
-  private queueLogEntry(logEntry: any) {
+  private saveLogEntry(logEntry: any) {
     this.logEntries$.next(logEntry);
   }
   private processLogEntries$() {

@@ -13,37 +13,37 @@ import {
   filter,
   fromEvent,
   map,
-  Observable,
-  of,
+  pipe,
 } from "rxjs";
 
 @Component({
   selector: "app-search-control",
   template: `
-    <input #searchInput type="search" />
+    <input #searchInput type="search" placeholder="Search" />
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchControl implements AfterViewInit {
   @Output() search = new EventEmitter<string>();
-  @Output() search$: Observable<string> = of("");
   @ViewChild("searchInput", { static: true }) searchInput!: ElementRef;
 
-  constructor() {}
   ngAfterViewInit(): void {
-    // this.search$ = this.getSearchTerm$();
-    this.getSearchTerm$().subscribe((searchTerm: string) => {
+    this.createSearchableTerm$().subscribe((searchTerm: string) => {
       this.search.emit(searchTerm);
     });
   }
 
-  private getSearchTerm$() {
-    const searchSource$ = fromEvent(this.searchInput.nativeElement, "keyup");
-    return searchSource$.pipe(
-      debounceTime(500),
-      map((event: any) => event.target.value),
-      filter((searchTerm: string) => searchTerm.length > 2),
-      distinctUntilChanged()
-    );
+  private createSearchableTerm$() {
+    const searchSource$ = fromEvent(this.searchInput.nativeElement, "input");
+    return searchSource$.pipe(eventToSearchAdapter);
   }
 }
+
+const toValue = (event: any) => event.target.value;
+const byLength = (searchTerm: string) => searchTerm.length > 2;
+const eventToSearchAdapter = pipe(
+  debounceTime(500),
+  map(toValue),
+  filter(byLength),
+  distinctUntilChanged()
+);

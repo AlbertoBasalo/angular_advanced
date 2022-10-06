@@ -319,6 +319,41 @@
       "appVersion": "1.14.5",
       "category": "warn",
       "id": 34
+    },
+    {
+      "timestamp": "2022-10-06T11:53:17.740Z",
+      "message": "AppModule constructor",
+      "appVersion": "1.14.5",
+      "category": "warn",
+      "id": 35
+    },
+    {
+      "timestamp": "2022-10-06T11:53:36.090Z",
+      "message": "AppModule constructor",
+      "appVersion": "1.14.5",
+      "category": "warn",
+      "id": 36
+    },
+    {
+      "timestamp": "2022-10-06T11:53:54.697Z",
+      "message": "AppModule constructor",
+      "appVersion": "1.14.5",
+      "category": "warn",
+      "id": 37
+    },
+    {
+      "timestamp": "2022-10-06T11:54:31.144Z",
+      "message": "AppModule constructor",
+      "appVersion": "1.14.5",
+      "category": "warn",
+      "id": 38
+    },
+    {
+      "timestamp": "2022-10-06T11:56:27.049Z",
+      "message": "AppModule constructor",
+      "appVersion": "1.14.5",
+      "category": "warn",
+      "id": 39
     }
   ]
 }
