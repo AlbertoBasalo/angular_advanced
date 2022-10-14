@@ -1,0 +1,9 @@
+<div>
+  <!-- This could be deeper in a nested element. -->
+  <ng-container
+    *ngIf="myCondition; then whenTrue; else whenFalse"
+  ></ng-container>
+</div>
+<!-- those could be in a a separate place -->
+<ng-template #whenTrue>Hello True</ng-template>
+<ng-template #whenFalse>Goodbye False</ng-template>
