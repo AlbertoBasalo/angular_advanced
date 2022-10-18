@@ -19,6 +19,7 @@ import { Component, Input } from "@angular/core";
           <li><a routerLink="/contact">📧 Contact</a></li>
         </ul>
       </nav>
+      <app-notifications></app-notifications>
     </footer>
   `,
 })

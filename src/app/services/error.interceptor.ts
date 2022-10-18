@@ -29,7 +29,8 @@ export class ErrorInterceptor implements HttpInterceptor {
     if (error instanceof HttpErrorResponse) {
       this.processHttpError(error);
     } else {
-      this.processApplicationError(error);
+      // this.processApplicationError(error);
+      // global handler
     }
     return throwError(() => error);
   }

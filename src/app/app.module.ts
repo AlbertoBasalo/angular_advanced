@@ -25,9 +25,10 @@ import {
   LOGGER_LEVEL,
   LogLevel,
 } from "./services/logger.tokens";
+import { NotificationsControl } from './notifications.control';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, FooterComponent, InfoComponent],
+  declarations: [AppComponent, HeaderComponent, FooterComponent, InfoComponent, NotificationsControl],
   imports: [
     BrowserModule,
     AppRoutingModule,
