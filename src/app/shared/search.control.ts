@@ -31,7 +31,8 @@ export class SearchControl implements AfterViewInit {
   constructor(private router: Router) {}
 
   ngAfterViewInit(): void {
-    this.createSearchableTerm$().subscribe(this.emitSearchTerm.bind(this));
+    const searchableTerm$ = this.createSearchableTerm$();
+    searchableTerm$.subscribe(this.onSearchTerm.bind(this));
   }
 
   private createSearchableTerm$() {
@@ -39,9 +40,9 @@ export class SearchControl implements AfterViewInit {
     return searchSource$.pipe(eventToSearchAdapter);
   }
 
-  private emitSearchTerm(searchTerm: string) {
-    this.search.emit(searchTerm);
-    this.useUrlSearchTerm(searchTerm);
+  private onSearchTerm(searchTerm: string) {
+    this.search.emit(searchTerm); // emit to parent using @Output
+    this.useUrlSearchTerm(searchTerm); // change url query params
   }
 
   private useUrlSearchTerm(searchTerm: string) {
@@ -55,7 +56,7 @@ export class SearchControl implements AfterViewInit {
 }
 
 const toValue = (event: any) => event.target.value;
-const byLength = (searchTerm: string) => searchTerm.length > 2;
+const byLength = (searchTerm: string) => searchTerm.length >= 1;
 const eventToSearchAdapter = pipe(
   debounceTime(500),
   map(toValue),
