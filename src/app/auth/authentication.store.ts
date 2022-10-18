@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, distinctUntilChanged, map } from "rxjs";
+import { BehaviorSubject, distinctUntilChanged, map, Observable } from "rxjs";
 import { Auth } from "../models/auth.interface";
 
 @Injectable({ providedIn: "root" })
@@ -9,30 +9,42 @@ export class AuthenticationStore {
     isAuthenticated: false,
     accessToken: "",
   };
-  private authState$ = new BehaviorSubject<Auth>(this.initialAuthState);
+  private state$ = new BehaviorSubject<Auth>(this.initialAuthState);
 
-  readonly auth$ = this.authState$.asObservable();
-  readonly isAuthenticated$ = this.selector<boolean>(
-    (auth) => auth.isAuthenticated
-  );
-  readonly isAuthenticated = this.authState$.getValue().isAuthenticated;
+  getState() {
+    return this.clone(this.state$.value);
+  }
+  getIsAuthenticated() {
+    return this.getState().isAuthenticated;
+  }
+
+  getAuth$(): Observable<Auth> {
+    return this.state$.asObservable().pipe(map((auth) => this.clone(auth)));
+  }
+  select$<T>(selector: (auth: Auth) => T): Observable<T> {
+    return this.getAuth$().pipe(map(selector), distinctUntilChanged());
+  }
+  selectIsAuthenticated$(): Observable<boolean> {
+    return this.select$<boolean>((auth) => auth.isAuthenticated);
+  }
 
   setAuth(auth: Partial<Auth>) {
-    this.authState$.next({
+    this.state$.next({
       isAuthenticated: true,
       email: auth.email || "",
       accessToken: auth.accessToken || "",
     });
   }
   removeAuth() {
-    const currentAuth = this.authState$.value;
+    const currentAuth = this.getState();
     const newAuth = {
       ...currentAuth,
       isAuthenticated: false,
     };
-    this.authState$.next(newAuth);
+    this.state$.next(newAuth);
   }
-  selector<T>(selectorFn: (auth: Auth) => T) {
-    return this.auth$.pipe(map(selectorFn), distinctUntilChanged());
+
+  private clone(auth: Auth) {
+    return JSON.parse(JSON.stringify(auth));
   }
 }

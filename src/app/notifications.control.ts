@@ -24,7 +24,7 @@ export class NotificationsControl {
         this.busy = false;
       },
     });
-    this.authenticationStore.isAuthenticated$.subscribe({
+    this.authenticationStore.selectIsAuthenticated$().subscribe({
       next: (isAuthenticated) => {
         this.icon = "🔒";
         this.message = isAuthenticated

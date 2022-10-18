@@ -20,11 +20,7 @@ export class AuthenticatedGuard implements CanLoad {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    console.log(
-      "this.authentication.isAuthenticated",
-      this.authentication.isAuthenticated
-    );
-    if (this.authentication.isAuthenticated) return true;
+    if (this.authentication.getIsAuthenticated()) return true;
     return this.redirectToLogin();
   }
 

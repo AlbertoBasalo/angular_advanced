@@ -82,5 +82,12 @@
     }
   ],
   "log-entries": [],
-  "users": []
+  "users": [
+    {
+      "email": "admin@world.org",
+      "password": "$2a$10$BjjlwgwHx9C2gyU9O7d3au/MOPrPHXuEjMR7JESkXJKdfXv7a2cWG",
+      "name": "Alberto Basalo",
+      "id": 1
+    }
+  ]
 }
