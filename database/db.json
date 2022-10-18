@@ -543,6 +543,27 @@
       "appVersion": "1.14.5",
       "category": "warn",
       "id": 66
+    },
+    {
+      "timestamp": "2022-10-18T09:58:37.607Z",
+      "message": "AppModule constructor",
+      "appVersion": "1.14.5",
+      "category": "warn",
+      "id": 67
+    },
+    {
+      "timestamp": "2022-10-18T09:59:05.941Z",
+      "message": "AppModule constructor",
+      "appVersion": "1.14.5",
+      "category": "warn",
+      "id": 68
+    },
+    {
+      "timestamp": "2022-10-18T09:59:21.492Z",
+      "message": "AppModule constructor",
+      "appVersion": "1.14.5",
+      "category": "warn",
+      "id": 69
     }
   ]
 }

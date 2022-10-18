@@ -3,7 +3,7 @@ import {
   HttpClientModule,
   HTTP_INTERCEPTORS,
 } from "@angular/common/http";
-import { NgModule } from "@angular/core";
+import { ErrorHandler, NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { AboutModule } from "./about/about.module";
 
@@ -18,6 +18,7 @@ import { LoggerConsoleService } from "./services/logger-console.service";
 
 import { environment } from "src/environments/environment";
 import { ErrorInterceptor } from "./services/error.interceptor";
+import { GlobalErrorHandler } from "./services/global-error.handler";
 import { LoggerHttpService } from "./services/logger-http.service";
 import {
   LOGGER_APP_VERSION,
@@ -54,12 +55,13 @@ import {
       provide: LoggerBaseService,
       deps: [HttpClient, LOGGER_LEVEL],
       useFactory: (http: HttpClient, loggerLevel: LogLevel) =>
-        !environment.production
+        environment.production
           ? new LoggerHttpService(http, loggerLevel)
           : new LoggerConsoleService(),
     },
     // * interceptors (using tokens as well)
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: ErrorHandler, useClass: GlobalErrorHandler },
   ],
   bootstrap: [AppComponent],
 })

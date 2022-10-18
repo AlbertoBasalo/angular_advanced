@@ -135,3 +135,10 @@ ng g interceptor services/error
 ng g m trips --route=trips --module=app
 ng g c shared/search --type=control
 ```
+
+## 7-Redux
+
+```
+ng g s services/error-mediator
+ng g class services/global-error --type=handler
+```
