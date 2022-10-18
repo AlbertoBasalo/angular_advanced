@@ -39,10 +39,12 @@ export class LoginPage implements ComponentStatus {
     ]);
   }
   onLogIn(credentials: Partial<Credentials>) {
-    console.log("Simulated Login", credentials);
-    this.isFormDirty = false;
-    this.authentication.user.isAuthenticated = true;
-    this.navigateBack();
+    this.authentication.logIn$(credentials).subscribe({
+      next: (token) => {
+        this.isFormDirty = false;
+        this.navigateBack();
+      },
+    });
   }
   onFormDirty($event: boolean) {
     this.isFormDirty = $event;

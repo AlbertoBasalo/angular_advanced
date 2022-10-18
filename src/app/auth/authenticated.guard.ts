@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { CanLoad, Route, Router, UrlSegment, UrlTree } from "@angular/router";
 import { Observable } from "rxjs";
-import { AuthenticationService } from "./authentication.service";
+import { AuthenticationStore } from "./authentication.store";
 
 @Injectable({
   providedIn: "root",
@@ -9,7 +9,7 @@ import { AuthenticationService } from "./authentication.service";
 export class AuthenticatedGuard implements CanLoad {
   constructor(
     private router: Router,
-    private authentication: AuthenticationService
+    private authentication: AuthenticationStore
   ) {}
 
   canLoad(
@@ -20,7 +20,11 @@ export class AuthenticatedGuard implements CanLoad {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    if (this.authentication.user.isAuthenticated) return true;
+    console.log(
+      "this.authentication.isAuthenticated",
+      this.authentication.isAuthenticated
+    );
+    if (this.authentication.isAuthenticated) return true;
     return this.redirectToLogin();
   }
 

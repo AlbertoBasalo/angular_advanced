@@ -141,4 +141,6 @@ ng g c shared/search --type=control
 ```
 ng g s services/error-mediator
 ng g class services/global-error --type=handler
+ng g c notifications --type=control
+ng g class auth/authentication --type=store
 ```

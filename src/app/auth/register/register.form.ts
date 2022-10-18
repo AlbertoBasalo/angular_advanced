@@ -1,5 +1,6 @@
-import { Component } from "@angular/core";
+import { Component, EventEmitter, Output } from "@angular/core";
 import { FormBuilder, FormControl } from "@angular/forms";
+import { User } from "src/app/models/user.interface";
 import { ValidationService } from "src/app/services/validation.service";
 import { FormBase } from "src/app/shared/form.base";
 
@@ -7,48 +8,6 @@ import { FormBase } from "src/app/shared/form.base";
   selector: "app-register-form",
   template: `
     <form [formGroup]="formGroup">
-      <!-- <div>
-        <label for="name">Your name</label>
-        <input
-          id="name"
-          name="name"
-          type="text"
-          placeholder="Your name"
-          formControlName="name"
-          [attr.aria-invalid]="hasError('name')"
-        />
-        <small *ngIf="mustShowMessage('name')">
-          {{ getErrorMessage("name") }}
-        </small>
-      </div> -->
-      <!-- <div>
-        <label for="password">Your password</label>
-        <input
-          id="password"
-          name="password"
-          type="password"
-          placeholder="password"
-          formControlName="password"
-          [attr.aria-invalid]="hasError('password')"
-        />
-        <small *ngIf="mustShowMessage('password')">
-          {{ getErrorMessage("password") }}
-        </small>
-      </div> -->
-      <!-- <div>
-        <label for="confirmPassword">Repeat Password</label>
-        <input
-          id="confirmPassword"
-          name="confirmPassword"
-          type="password"
-          placeholder="confirm password"
-          formControlName="confirmPassword"
-          [attr.aria-invalid]="hasError('confirmPassword')"
-        />
-        <small *ngIf="mustShowMessage('confirmPassword')">
-          {{ getErrorMessage("confirmPassword") }}
-        </small>
-      </div> -->
       <app-input-control
         label="Your name"
         formControlName="name"
@@ -79,6 +38,7 @@ import { FormBase } from "src/app/shared/form.base";
   styles: [],
 })
 export class RegisterForm extends FormBase {
+  @Output() register = new EventEmitter<Partial<User>>();
   override formGroup = this.formBuilder.group(
     {
       name: new FormControl("", this.validation.nameValidator),
@@ -95,5 +55,12 @@ export class RegisterForm extends FormBase {
 
   onRegisterClick() {
     console.log("Registering...", this.formGroup.value);
+    const formValue = this.formGroup.value;
+    const user: Partial<User> = {
+      name: formValue.name!,
+      email: formValue.email!,
+      password: formValue.password!,
+    };
+    this.register.emit(user);
   }
 }
