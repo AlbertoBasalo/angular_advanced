@@ -18,11 +18,11 @@ export class AuthenticationStore {
     return this.getState().isAuthenticated;
   }
 
-  getAuth$(): Observable<Auth> {
+  getState$(): Observable<Auth> {
     return this.state$.asObservable().pipe(map((auth) => this.clone(auth)));
   }
   select$<T>(selector: (auth: Auth) => T): Observable<T> {
-    return this.getAuth$().pipe(map(selector), distinctUntilChanged());
+    return this.getState$().pipe(map(selector), distinctUntilChanged());
   }
   selectIsAuthenticated$(): Observable<boolean> {
     return this.select$<boolean>((auth) => auth.isAuthenticated);

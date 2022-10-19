@@ -40,8 +40,8 @@ export class ApiService {
     return this.http.get<Trip[]>(`${this.tripsUrl}?q=${query}`);
   }
 
-  register$(credentials: Partial<User>): Observable<string> {
-    return this.http.post<string>(this.usersUrl, credentials);
+  register$(user: Partial<User>): Observable<string> {
+    return this.http.post<string>(this.usersUrl, user);
   }
   logIn$(credentials: Partial<Credentials>): Observable<string> {
     return this.http.post<string>(this.loginUrl, credentials);
