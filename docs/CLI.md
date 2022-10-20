@@ -160,4 +160,5 @@ ng g action future/state/Trips --prefix=load --api=true
 # reducer functions on reducers file
 ng g selector future/state/Trips  --skip-tests
 ng g effect future/state/Trips --skip-tests --api=true -m future/future.module.ts --prefix=load
+ng add @ngrx/router-store@latest
 ```

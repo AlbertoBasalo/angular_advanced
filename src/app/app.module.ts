@@ -17,6 +17,7 @@ import { LoggerBaseService } from "./services/logger-base.service";
 import { LoggerConsoleService } from "./services/logger-console.service";
 
 import { EffectsModule } from "@ngrx/effects";
+import { routerReducer, StoreRouterConnectingModule } from "@ngrx/router-store";
 import { StoreModule } from "@ngrx/store";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 import { environment } from "../environments/environment";
@@ -44,12 +45,18 @@ import {
     HomeModule,
     AboutModule,
     HttpClientModule,
-    StoreModule.forRoot({}, {}),
+    StoreModule.forRoot(
+      {
+        router: routerReducer,
+      },
+      {}
+    ),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,
     }),
     EffectsModule.forRoot([]),
+    StoreRouterConnectingModule.forRoot(),
   ],
   providers: [
     // * static inversion of control
