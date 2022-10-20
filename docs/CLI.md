@@ -156,7 +156,7 @@ ng g m future --route=future -m=app
 ng g store Future --module future/future.module.ts --state-path=future/state  --state-interface=FutureState
 ng g action future/state/Trips --prefix=load --api=true
 # createReducer(initialState, on(action, reducerFunction))
-ng g reducer future/state/Trips --prefix=load --api=true
+# ng g reducer future/state/Trips --prefix=load --api=true
 # reducer functions on reducers file
 # selector functions on selectors file
 

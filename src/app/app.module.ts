@@ -16,7 +16,11 @@ import { InfoComponent } from "./info.component";
 import { LoggerBaseService } from "./services/logger-base.service";
 import { LoggerConsoleService } from "./services/logger-console.service";
 
-import { environment } from "src/environments/environment";
+import { EffectsModule } from "@ngrx/effects";
+import { StoreModule } from "@ngrx/store";
+import { StoreDevtoolsModule } from "@ngrx/store-devtools";
+import { environment } from "../environments/environment";
+import { NotificationsControl } from "./notifications.control";
 import { ErrorInterceptor } from "./services/error.interceptor";
 import { GlobalErrorHandler } from "./services/global-error.handler";
 import { LoggerHttpService } from "./services/logger-http.service";
@@ -25,14 +29,15 @@ import {
   LOGGER_LEVEL,
   LogLevel,
 } from "./services/logger.tokens";
-import { NotificationsControl } from './notifications.control';
-import { StoreModule } from '@ngrx/store';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { environment } from '../environments/environment';
-import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, FooterComponent, InfoComponent, NotificationsControl],
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    FooterComponent,
+    InfoComponent,
+    NotificationsControl,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -40,7 +45,10 @@ import { EffectsModule } from '@ngrx/effects';
     AboutModule,
     HttpClientModule,
     StoreModule.forRoot({}, {}),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production,
+    }),
     EffectsModule.forRoot([]),
   ],
   providers: [
