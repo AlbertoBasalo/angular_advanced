@@ -50,7 +50,10 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "assets": ["src/favicon.ico", "src/assets"],
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
             "styles": [
               "./node_modules/@picocss/pico/css/pico.fluid.classless.min.css",
               "src/styles.css"
@@ -112,6 +115,9 @@
     }
   },
   "cli": {
-    "analytics": "eb967521-fa7a-4ee8-b4e3-1116a454b5a3"
+    "analytics": "eb967521-fa7a-4ee8-b4e3-1116a454b5a3",
+    "schematicCollections": [
+      "@ngrx/schematics"
+    ]
   }
 }
