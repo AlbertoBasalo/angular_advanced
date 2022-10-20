@@ -60,6 +60,7 @@ const routes: Routes = [
   },
   { path: 'trips', loadChildren: () => import('./trips/trips.module').then(m => m.TripsModule) },
   { path: 'search', loadChildren: () => import('./search/search.module').then(m => m.SearchModule) },
+  { path: 'future', loadChildren: () => import('./future/future.module').then(m => m.FutureModule) },
   {
     path: "**",
     redirectTo: "",

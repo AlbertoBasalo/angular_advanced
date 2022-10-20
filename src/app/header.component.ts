@@ -23,6 +23,7 @@ import { AuthenticationStore } from "./auth/authentication.store";
         <ul>
           <li><a routerLink="/agencies">➡️ Agencies</a></li>
           <li><a routerLink="/trips">➡️ Trips</a></li>
+          <li><a routerLink="/future">🔮 Future</a></li>
           <ng-container *ngIf="isAnonymous$ | async">
             <li><a routerLink="/auth/register">🔏 Register</a></li>
             <li><a routerLink="/auth/login">🔐 Login</a></li>

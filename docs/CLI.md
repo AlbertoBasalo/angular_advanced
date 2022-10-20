@@ -144,3 +144,22 @@ ng g class services/global-error --type=handler
 ng g c notifications --type=control
 ng g class auth/authentication --type=store
 ```
+
+## 8-NgRx
+
+```bash
+ng add @ngrx/store@latest
+ng add @ngrx/schematics@latest --defaultCollection
+ng add @ngrx/store-devtools@latest
+ng add @ngrx/effects@latest
+ng g m future --route=future -m=app
+ng g store Future --module future/future.module.ts --state-path=future/state  --state-interface=FutureState
+# interface futureState and initial state to interface file
+# generate actions
+ng g action future/state/Agencies --prefix=load --api=true
+# createReducer(initialState, on(action, reducerFunction))
+# reducer functions on reducers file
+# selector functions on selectors file
+
+ng g effect future/state/Agencies --skip-tests --api=true -m future/future.module.ts --prefix=load
+```
