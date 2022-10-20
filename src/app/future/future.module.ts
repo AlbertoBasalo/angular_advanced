@@ -5,6 +5,8 @@ import { FutureRoutingModule } from './future-routing.module';
 import { FuturePage } from './future.page';
 import { StoreModule } from '@ngrx/store';
 import * as fromFuture from './state';
+import { EffectsModule } from '@ngrx/effects';
+import { TripsEffects } from './state/trips.effects';
 
 
 @NgModule({
@@ -14,7 +16,8 @@ import * as fromFuture from './state';
   imports: [
     CommonModule,
     FutureRoutingModule,
-    StoreModule.forFeature(fromFuture.futureFeatureKey, fromFuture.reducers, { metaReducers: fromFuture.metaReducers })
+    StoreModule.forFeature(fromFuture.futureFeatureKey, fromFuture.reducers, { metaReducers: fromFuture.metaReducers }),
+    EffectsModule.forFeature([TripsEffects])
   ]
 })
 export class FutureModule { }

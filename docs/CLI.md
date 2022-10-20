@@ -158,7 +158,6 @@ ng g action future/state/Trips --prefix=load --api=true
 # createReducer(initialState, on(action, reducerFunction))
 # ng g reducer future/state/Trips --prefix=load --api=true
 # reducer functions on reducers file
-# selector functions on selectors file
-
+ng g selector future/state/Trips  --skip-tests
 ng g effect future/state/Trips --skip-tests --api=true -m future/future.module.ts --prefix=load
 ```

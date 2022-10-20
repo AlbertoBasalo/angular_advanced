@@ -1,6 +1,17 @@
-import { createFeatureSelector } from "@ngrx/store";
+import { createFeatureSelector, createSelector } from "@ngrx/store";
 import { FutureState } from ".";
 
 export const selectFutureState = createFeatureSelector<FutureState>("future");
 
-export const selectFutureLoading = (state: FutureState) => state.loading;
+export const selectLoading = createSelector(
+  selectFutureState,
+  (state: FutureState) => state.loading
+);
+export const selectTrips = createSelector(
+  selectFutureState,
+  (state: FutureState) => state.trips
+);
+export const selectError = createSelector(
+  selectFutureState,
+  (state: FutureState) => state.error
+);
