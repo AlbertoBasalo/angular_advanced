@@ -168,4 +168,6 @@ ng add @ngrx/router-store@latest
 ```bash
 npm i
 npm audit fix --force
+ng update
+ng update @angular/cli
 ```
