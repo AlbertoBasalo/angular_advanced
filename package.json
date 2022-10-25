@@ -13,7 +13,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "api": "json-server-auth ./database/db.json -r ./database/routes.json",
-    "icon": "pwa-asset-generator logo.png ./src/assets/icons -c -f -w -m ./src/manifest.webmanifest -i ./src/index.html"
+    "icon": "pwa-asset-generator logo.png ./src/assets/icons -c -f -w -m ./src/manifest.webmanifest -i ./src/index.html",
+    "pwa": "npm run build && npx http-server -o -p 8114 -c-1 dist/angular_advanced"
   },
   "private": true,
   "dependencies": {
