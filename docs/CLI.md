@@ -162,3 +162,10 @@ ng g selector future/state/Trips  --skip-tests
 ng g effect future/state/Trips --skip-tests --api=true -m future/future.module.ts --prefix=load
 ng add @ngrx/router-store@latest
 ```
+
+## 9-PWA
+
+```bash
+ng add @angular/pwa@latest
+npm i --force
+```
