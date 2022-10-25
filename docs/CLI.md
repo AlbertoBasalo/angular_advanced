@@ -166,6 +166,6 @@ ng add @ngrx/router-store@latest
 ## 9-PWA
 
 ```bash
-ng add @angular/pwa@latest
-npm i --force
+npm i
+npm audit fix --force
 ```
