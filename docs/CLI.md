@@ -176,4 +176,6 @@ npm install pwa-asset-generator -D
 # remove fav.ico and icons from assets folder
 # "icon": "pwa-asset-generator logo.png ./src/assets/icons -c -f -w -m ./src/manifest.webmanifest -i ./src/index.html"
 npm run icon
+# "pwa":"npm run build && npx http-server -o -p 8014 -c-1 dist/angular_advanced"
+npm run pwa
 ```
