@@ -26,5 +26,36 @@
         ]
       }
     }
+  ],
+  "dataGroups": [
+    {
+      "name": "stable-cache-first-1d",
+      "cacheConfig": {
+        "strategy": "performance",
+        "maxAge": "1d",
+        "maxSize": 10
+      },
+      "urls": ["http://localhost:3000/agencies"]
+    },
+    {
+      "name": "dynamic-network-first",
+      "cacheConfig": {
+        "strategy": "freshness",
+        "maxAge": "1h",
+        "maxSize": 10,
+        "timeout": "10s"
+      },
+      "urls": ["http://localhost:3000/trips"]
+    },
+    {
+      "name": "stale-network-first",
+      "cacheConfig": {
+        "strategy": "freshness",
+        "maxAge": "1h",
+        "maxSize": 10,
+        "timeout": "0u"
+      },
+      "urls": ["http://localhost:3000/bookings"]
+    }
   ]
 }
