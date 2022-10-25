@@ -172,4 +172,5 @@ ng update
 ng update @angular/cli
 ng update @angular/core
 ng add @angular/pwa@latest
+npm install pwa-asset-generator -D
 ```
