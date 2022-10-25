@@ -167,10 +167,13 @@ ng add @ngrx/router-store@latest
 
 ```bash
 npm i
-npm audit fix --force
+# commit after each command
 ng update
 ng update @angular/cli
 ng update @angular/core
 ng add @angular/pwa@latest
 npm install pwa-asset-generator -D
+# remove fav.ico and icons from assets folder
+# "icon": "pwa-asset-generator logo.png ./src/assets/icons -c -f -w -m ./src/manifest.webmanifest -i ./src/index.html"
+npm run icon
 ```
