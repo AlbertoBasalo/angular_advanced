@@ -1,11 +1,13 @@
 import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { Store } from "@ngrx/store";
-import { FutureState, loadTrips } from "./state";
+
 import {
+  FutureState,
+  loadTrips,
   selectError,
   selectLoading,
   selectTrips,
-} from "./state/trips.selectors";
+} from "./state";
 
 @Component({
   template: `

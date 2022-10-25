@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { FutureState } from ".";
+import { FutureState } from "./future.model";
 
 export const selectFutureState = createFeatureSelector<FutureState>("future");
 
