@@ -12,7 +12,8 @@
     "start": "ng serve -o --port=4214",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "api": "json-server-auth ./database/db.json -r ./database/routes.json"
+    "api": "json-server-auth ./database/db.json -r ./database/routes.json",
+    "icon": "pwa-asset-generator logo.png ./src/assets/icons -c -f -w -m ./src/manifest.webmanifest -i ./src/index.html"
   },
   "private": true,
   "dependencies": {
