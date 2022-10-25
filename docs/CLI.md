@@ -170,4 +170,5 @@ npm i
 npm audit fix --force
 ng update
 ng update @angular/cli
+ng update @angular/core
 ```
