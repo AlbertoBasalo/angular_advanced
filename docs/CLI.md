@@ -179,3 +179,51 @@ npm run icon
 # "pwa":"npm run build && npx http-server -o -p 8014 -c-1 dist/angular_advanced"
 npm run pwa
 ```
+
+## 10-Libs
+
+```bash
+# main workspace generation
+npx @angular/cli@latest new libs14 --create-application false --skip-install true
+
+# apps generation
+ng g app web --minimal --routing --style=css
+ng g app admin --minimal --routing --style=css
+
+#libs generation
+ng g lib ui
+ng g lib api
+
+# compilations
+# "build:ui": "ng build ui"
+# "build:api": "ng build api"
+npm run build:ui
+# "start": "ng serve web",
+npm start
+# watch mode
+# "watch:ui": "ng build ui --watch"
+npm run watch:ui
+# "watch:api": "ng build api --watch"
+npm run watch:api
+
+# publishing (needs npm account)
+"publish:ui": "ng build ui && cd dist/ui && npm publish",
+npm run publish:ui
+```
+
+## 11-StandAlone
+
+```bash
+mkdir rc15
+cd rc15
+npm i @angular/cli@15.0.0-rc.0
+ng new lab15 --minimal
+cd lab15
+npm start
+
+ng g c header
+ng g c home --type=page --skip-selector
+ng g c contact --type=page --skip-selector
+ng g s api
+ng g c users --type=page --skip-selector
+```
