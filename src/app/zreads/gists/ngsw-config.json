@@ -2,8 +2,8 @@
   "$schema": "./node_modules/@angular/service-worker/config/schema.json",
   "index": "/index.html",
   "appData": {
-    "version": "12:43",
-    "description": "feat: 🌅 features"
+    "version": "1.2.3",
+    "description": "feat: 🌅 less bugs more features"
   },
   "assetGroups": [
     {
@@ -39,7 +39,7 @@
         "maxAge": "1d",
         "maxSize": 10
       },
-      "urls": ["http://localhost:3000/agencies"]
+      "urls": ["http://api.yourserver.com/countries"]
     },
     {
       "name": "dynamic-network-first",
@@ -49,7 +49,7 @@
         "maxSize": 10,
         "timeout": "10s"
       },
-      "urls": ["http://localhost:3000/trips"]
+      "urls": ["http://api.yourserver.com/moneyquotes"]
     },
     {
       "name": "stale-while-revalidating",
@@ -59,7 +59,7 @@
         "maxSize": 10,
         "timeout": "0u"
       },
-      "urls": ["http://localhost:3000/bookings"]
+      "urls": ["http://api.yourserver.com/population"]
     }
   ]
 }
